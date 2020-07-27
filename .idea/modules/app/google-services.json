@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "439415048150",
+    "firebase_url": "https://kafeotomasyon-c755d.firebaseio.com",
+    "project_id": "kafeotomasyon-c755d",
+    "storage_bucket": "kafeotomasyon-c755d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439415048150:android:5c4025c3972d397af54677",
+        "android_client_info": {
+          "package_name": "com.example.kafeotomasyon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "439415048150-0h41fb5nvsnkjsuo7c8o1ttfe0hoavv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kafeotomasyon",
+            "certificate_hash": "e228965307f1936715b79ce9d4c9d1c2a87533c1"
+          }
+        },
+        {
+          "client_id": "439415048150-s65fsdblerp6e25i0bliglj26a1bslkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGymi91ZQbvx4bboeZTw-gyMpdspJ9gSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "439415048150-s65fsdblerp6e25i0bliglj26a1bslkf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
