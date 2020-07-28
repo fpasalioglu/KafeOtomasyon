@@ -22,9 +22,6 @@ public abstract class AbstractMenuDataProvider {
     public abstract void addGroupItem(int groupPosition);
     public abstract void addChildItem(int groupPosition, int childPosition);
 
-    public abstract void removeGroupItem(int groupPosition);
     public abstract void removeChildItem(int groupPosition, int childPosition);
 
-    public abstract void clear();
-    public abstract void clearChildren(int groupPosition);
 }

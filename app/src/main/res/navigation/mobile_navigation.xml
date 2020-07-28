@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.example.kafeotomasyon.ui.gallery.GalleryFragment"
+        android:name="com.example.kafeotomasyon.ui.menuekle.MenuEkleFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_menuekle" />
 
     <fragment
         android:id="@+id/nav_slideshow"

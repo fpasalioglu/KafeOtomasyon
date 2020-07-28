@@ -26,13 +26,4 @@
         android:gravity="center_horizontal">
     </TextView>
 
-    <TextView
-        android:id="@+id/grid_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Durum"
-        android:textSize="14dp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal">
-    </TextView>
 </LinearLayout>

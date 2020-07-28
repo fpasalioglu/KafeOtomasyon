@@ -18,8 +18,8 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.kafeotomasyon.Utils.Constants.sogukicecekler;
 import static com.example.kafeotomasyon.common.MenuDataProvider.adetler;
-import static com.example.kafeotomasyon.common.MenuDataProvider.sogukicecekler;
 
 class MenuAdapter
         extends AbstractExpandableItemAdapter<MenuAdapter.MyGroupViewHolder, MenuAdapter.MyChildViewHolder> {

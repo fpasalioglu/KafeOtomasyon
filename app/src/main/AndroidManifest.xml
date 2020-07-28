@@ -31,6 +31,12 @@
 
         <activity android:name=".common.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".MenuIcerikEkleActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".MenuIcerikDuzenleActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

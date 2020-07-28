@@ -35,9 +35,6 @@ public class MasaAdapter extends BaseAdapter {
             TextView textView = (TextView) gridView.findViewById(R.id.grid_item_label);
             textView.setText(list.get(position));
 
-            TextView textView2 = (TextView) gridView.findViewById(R.id.grid_status);
-            textView2.setText(list.get(position));
-
             // set image based on selected text
             ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
             imageView.setImageResource(R.drawable.table);

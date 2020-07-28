@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/menuAditext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MEnu Adı"
+        android:textAlignment="center"
+        android:textSize="26dp"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ürün Ekle"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textColor="#EF327D"/>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/BirimeditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="1"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="5dp"
+            android:inputType="number"
+            android:hint="Birim Fiyatı ₺" />
+
+        <EditText
+            android:id="@+id/UrunAdieditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="1"
+            android:layout_marginRight="10dp"
+            android:inputType="textPersonName"
+            android:hint="Ürün Adı" />
+
+        <Button
+            android:id="@+id/urunekle"
+            android:layout_marginRight="5dp"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Ekle" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ürün Listesi"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        android:textColor="#EF327D"/>
+
+    <ListView
+        android:id="@+id/menuurunlistesi"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/emptyText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="#ef327d"
+        android:textSize="22dp"
+        android:text="Ürün Listesi Boş" />
+</LinearLayout>

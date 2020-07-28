@@ -3,10 +3,11 @@ package com.example.kafeotomasyon.common;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.example.kafeotomasyon.Utils.Constants.menuler;
+import static com.example.kafeotomasyon.Utils.Constants.sogukicecekler;
+
 public class MenuDataProvider extends AbstractMenuDataProvider {
 
-    static String[][] sogukicecekler = {{"Fanta", "Soğuk Kahve","Hoşaf","Ayran"}, {"Kola", "Limonata", "Hoşaf"}};
-    static String[] menuler = {"Soğuk İçecekler", "Sıcak İçecekler"};
     public static int[][] adetler = {};
 
     private List<GroupSet> mData;
@@ -62,11 +63,6 @@ public class MenuDataProvider extends AbstractMenuDataProvider {
     }
 
     @Override
-    public void removeGroupItem(int groupPosition) {
-        mData.remove(groupPosition);
-    }
-
-    @Override
     public void removeChildItem(int groupPosition, int childPosition) {
         mData.get(groupPosition).mChildren.remove(childPosition);
     }
@@ -84,16 +80,6 @@ public class MenuDataProvider extends AbstractMenuDataProvider {
     @Override
     public void addChildItem(int groupPosition, int childPosition) {
         mData.get(groupPosition).addNewChildData(groupPosition, childPosition);
-    }
-
-    @Override
-    public void clear() {
-        mData.clear();
-    }
-
-    @Override
-    public void clearChildren(int groupPosition) {
-        mData.get(groupPosition).mChildren.clear();
     }
 
     public static final class ConcreteGroupData extends GroupData {
