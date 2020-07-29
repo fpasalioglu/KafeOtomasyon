@@ -34,4 +34,8 @@ public class MenuModel {
         return urunler;
     }
 
+    public int getUrunSize(){
+        return urunler.size();
+    }
+
 }

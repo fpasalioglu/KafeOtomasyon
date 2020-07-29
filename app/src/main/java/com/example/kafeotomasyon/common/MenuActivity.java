@@ -43,7 +43,7 @@ public class MenuActivity extends AppCompatActivity implements RecyclerViewExpan
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-    //    setTitle("Masa Yönetimi");
+        setTitle("Sipariş Seçimi");
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         mRecyclerView = findViewById(R.id.recycler_view);
@@ -126,7 +126,7 @@ public class MenuActivity extends AppCompatActivity implements RecyclerViewExpan
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
-            //todo
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);

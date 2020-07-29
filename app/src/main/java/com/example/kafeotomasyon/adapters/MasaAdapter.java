@@ -30,7 +30,7 @@ public class MasaAdapter extends BaseAdapter {
         if (convertView == null) {
             gridView = new View(context);
             gridView = inflater.inflate(R.layout.grid_item, null);
-
+//todo pozisyon 1 geliyor
             // set value into textview
             TextView textView = (TextView) gridView.findViewById(R.id.grid_item_label);
             textView.setText(list.get(position));

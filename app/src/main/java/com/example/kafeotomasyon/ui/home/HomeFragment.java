@@ -13,10 +13,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.kafeotomasyon.MasaEkleActivity;
 import com.example.kafeotomasyon.MasaYonetimiActivity;
 import com.example.kafeotomasyon.R;
 import com.example.kafeotomasyon.adapters.MasaAdapter;
-import com.example.kafeotomasyon.common.MenuActivity;
 import com.example.kafeotomasyon.models.Masa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -32,7 +32,7 @@ import static com.example.kafeotomasyon.MainActivity.database;
 
 public class HomeFragment extends Fragment {
     GridView gridView;
-    public static List<String> ITEM_LIST;
+    public static List<String> Masa_list;
     public static MasaAdapter masaadapter;
     TextView emptytext;
     private FloatingActionButton fab;
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        ITEM_LIST = new ArrayList<String>();
+        Masa_list = new ArrayList<String>();
 
         gridView = (GridView) root.findViewById(R.id.gridView1);
         emptytext = (TextView) root.findViewById(R.id.emptyText);
@@ -51,12 +51,12 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), MenuActivity.class);
+                Intent i = new Intent(getActivity(), MasaEkleActivity.class);
                 startActivity(i);
             }
         });
 
-        masaadapter = new MasaAdapter(getContext(), ITEM_LIST);
+        masaadapter = new MasaAdapter(getContext(), Masa_list);
         gridView.setAdapter(masaadapter);
         gridView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -74,8 +74,9 @@ public class HomeFragment extends Fragment {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.child("masalar").getChildren();
                 for (DataSnapshot snapshot1 : snapshot) {
                     Masa masa = snapshot1.getValue(Masa.class);
-                    if(!ITEM_LIST.contains(masa.getMasaadi())) {
-                        ITEM_LIST.add(ITEM_LIST.size(), masa.getMasaadi());
+                    if(!Masa_list.contains(masa.getMasaadi())) {
+                        Log.e("ff",masa.getMasaadi());
+                        Masa_list.add(Masa_list.size(), masa.getMasaadi());
                         masaadapter.notifyDataSetChanged();
                     }
                 }

@@ -66,6 +66,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         UrunAdapter adapter = new UrunAdapter(this, urunler);
         listView.setAdapter(adapter);
         listView.setEmptyView(empty);
+
         ekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

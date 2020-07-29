@@ -8,16 +8,15 @@ import java.util.Map;
 
 public class Masa {
     String masaadi;
-    ArrayList<String> icecekarray, yiyecekarray;
+    ArrayList<String> siparisarray;
     int fiyat;
 
     public Masa(){
     }
 
-    public Masa(String masaadi, ArrayList<String> icecekarray, ArrayList<String> yiyecekarray, int fiyat) {
+    public Masa(String masaadi, ArrayList<String> siparisarray, int fiyat) {
         this.masaadi = masaadi;
-        this.icecekarray = icecekarray;
-        this.yiyecekarray = yiyecekarray;
+        this.siparisarray = siparisarray;
         this.fiyat = fiyat;
     }
 
@@ -25,8 +24,7 @@ public class Masa {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("masaadi", masaadi);
-        result.put("icecekler", icecekarray);
-        result.put("yiyecekler", yiyecekarray);
+        result.put("siparisarray", siparisarray);
         result.put("fiyat", fiyat);
         return result;
     }

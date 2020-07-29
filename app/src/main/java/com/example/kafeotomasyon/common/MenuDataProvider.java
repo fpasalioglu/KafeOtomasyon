@@ -1,5 +1,7 @@
 package com.example.kafeotomasyon.common;
 
+import android.util.Log;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,11 +10,8 @@ import static com.example.kafeotomasyon.Utils.Constants.sogukicecekler;
 
 public class MenuDataProvider extends AbstractMenuDataProvider {
 
-    public static int[][] adetler = {};
-
     private List<GroupSet> mData;
     private IdGenerator mGroupIdGenerator;
-    private int toplam=0;
     public MenuDataProvider() {
         mData = new LinkedList<>();
         mGroupIdGenerator = new IdGenerator();
@@ -21,11 +20,8 @@ public class MenuDataProvider extends AbstractMenuDataProvider {
             addGroupItem(i);
             for (int j = 0; j < sogukicecekler[i].length; j++) {
                 addChildItem(i, j);
-                toplam++;
             }
         }
-
-        adetler = new int[menuler.length][toplam];
     }
 
     @Override
@@ -146,9 +142,11 @@ public class MenuDataProvider extends AbstractMenuDataProvider {
         public void addNewChildData(int groupPosition, int position) {
             long id = mChildIdGenerator.next();
             String text = sogukicecekler[groupPosition][position];
-            ConcreteChildData child = new ConcreteChildData(id, text);
 
-            mChildren.add(position, child);
+            if (text!=null) {
+                ConcreteChildData child = new ConcreteChildData(id, text);
+                mChildren.add(position, child);
+            }
         }
     }
 }

@@ -18,8 +18,9 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.kafeotomasyon.Utils.Constants.adetler;
+import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 import static com.example.kafeotomasyon.Utils.Constants.sogukicecekler;
-import static com.example.kafeotomasyon.common.MenuDataProvider.adetler;
 
 class MenuAdapter
         extends AbstractExpandableItemAdapter<MenuAdapter.MyGroupViewHolder, MenuAdapter.MyChildViewHolder> {
@@ -220,14 +221,27 @@ class MenuAdapter
 
     private void handleOnClickChildItemAddAboveButton(int groupPosition, int childPosition) {
         adetler[groupPosition][childPosition]++;
+        if (siparisarray.contains(adetler[groupPosition][childPosition]-1+" "+sogukicecekler[groupPosition][childPosition])){
+            siparisarray.remove(adetler[groupPosition][childPosition]-1+" "+sogukicecekler[groupPosition][childPosition]);
+        }
+        siparisarray.add(adetler[groupPosition][childPosition]+" "+sogukicecekler[groupPosition][childPosition]);
+
         Log.e(TAG,""+adetler[groupPosition][childPosition]+" "+sogukicecekler[groupPosition][childPosition]);
+        Log.e(TAG,siparisarray.toString());
     }
 
     private void handleOnClickChildItemAddBelowButton(int groupPosition, int childPosition) {
-        if (adetler[groupPosition][childPosition]!=0)
+        if (adetler[groupPosition][childPosition]!=0) {
             adetler[groupPosition][childPosition]--;
 
+            if (siparisarray.contains(adetler[groupPosition][childPosition] + 1 + " " + sogukicecekler[groupPosition][childPosition])) {
+                siparisarray.remove(adetler[groupPosition][childPosition] + 1 + " " + sogukicecekler[groupPosition][childPosition]);
+            }
+            if(adetler[groupPosition][childPosition]!=0)
+            siparisarray.add(adetler[groupPosition][childPosition] + " " + sogukicecekler[groupPosition][childPosition]);
+        }
         Log.e(TAG,""+adetler[groupPosition][childPosition]+" "+sogukicecekler[groupPosition][childPosition]);
+        Log.e(TAG,siparisarray.toString());
     }
 
     private void handleOnClickChildItemRemoveButton(int groupPosition, int childPosition) {
