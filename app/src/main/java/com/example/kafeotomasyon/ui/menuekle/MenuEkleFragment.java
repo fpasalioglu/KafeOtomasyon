@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,15 +23,17 @@ public class MenuEkleFragment extends Fragment {
     ListView listItemView;
     FloatingActionButton fab;
     ArrayAdapter<String> adapter;
-
+    TextView empty;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_menuler, container, false);
 
         listItemView = (ListView) root.findViewById(R.id.listView1);
         fab = (FloatingActionButton) root.findViewById(R.id.fab1);
-         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, menuler);
+        empty = (TextView) root.findViewById(R.id.emptyText);
+        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, menuler);
 
+        listItemView.setEmptyView(empty);
         listItemView.setAdapter(adapter);
         listItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {

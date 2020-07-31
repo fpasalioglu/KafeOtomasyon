@@ -37,7 +37,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
     private Button ekle;
     private ListView listView;
     private TextView empty;
-    List<Urun> urunler = new ArrayList<Urun>();
+    private List<Urun> urunler;
     private DatabaseReference databaseUrun;
     private UrunAdapter adapter;
 
@@ -70,7 +70,12 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         ekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urunler.add(new Urun(urunadi.getText().toString(), birimEdittext.getText().toString()+" ₺"));
+                if (urunler!=null) {
+                    urunler.add(new Urun(urunadi.getText().toString(), birimEdittext.getText().toString() + " ₺"));
+                }else{
+                    urunler = new ArrayList<Urun>();
+                    urunler.add(new Urun(urunadi.getText().toString(), birimEdittext.getText().toString() + " ₺"));
+                }
                 adapter.notifyDataSetChanged();
             }
         });
@@ -100,8 +105,11 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
                     MenuModel menu = snapshot1.getValue(MenuModel.class);
 
                     if (menu.getMenuadi().equals(menuadi.getText().toString())){
-                        urunler= menu.getUrunler();
+                        urunler = menu.getUrunler();
                     }
+                }
+                if (urunler == null) {
+                    urunler = new ArrayList<Urun>();
                 }
                 adapter = new UrunAdapter(MenuIcerikDuzenleActivity.this, urunler);
                 listView.setAdapter(adapter);

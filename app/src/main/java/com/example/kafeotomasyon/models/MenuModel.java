@@ -35,7 +35,10 @@ public class MenuModel {
     }
 
     public int getUrunSize(){
-        return urunler.size();
+        if (urunler!=null) {
+            return urunler.size();
+        }
+        return 0;
     }
 
 }

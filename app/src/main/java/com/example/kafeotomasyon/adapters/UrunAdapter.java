@@ -25,7 +25,10 @@ public class UrunAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return urunList.size();
+        if (urunList!=null) {
+            return urunList.size();
+        }
+        return 0;
     }
 
     @Override
