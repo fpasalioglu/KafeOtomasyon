@@ -66,8 +66,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        masaadapter = new MasaAdapter(getContext(), masa_list);
-        gridView.setAdapter(masaadapter);
         gridView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent i = new Intent(getContext(), MasaYonetimiActivity.class);
@@ -82,13 +80,12 @@ public class HomeFragment extends Fragment {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.child("masalar").getChildren();
                 for (DataSnapshot snapshot1 : snapshot) {
                     Masa masa = snapshot1.getValue(Masa.class);
-                    Log.e("fff",masa.getMasaadi());
                     if(!masa_list.contains(masa.getMasaadi())) {
-                        Log.e("fff2",masa.getMasaadi());
-                        masa_list.add(masa_list.size(), masa.getMasaadi());
-                        masaadapter.notifyDataSetChanged();
+                        masa_list.add(masa.getMasaadi());
                     }
                 }
+                masaadapter = new MasaAdapter(getContext(), masa_list);
+                gridView.setAdapter(masaadapter);
                 progressBar.setVisibility(View.GONE);
             }
             @Override
