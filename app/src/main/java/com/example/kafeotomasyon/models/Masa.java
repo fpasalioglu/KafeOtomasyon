@@ -9,12 +9,12 @@ import java.util.Map;
 public class Masa {
     String masaadi;
     ArrayList<String> siparisarray;
-    int fiyat;
+    float fiyat;
 
     public Masa(){
     }
 
-    public Masa(String masaadi, ArrayList<String> siparisarray, int fiyat) {
+    public Masa(String masaadi, ArrayList<String> siparisarray, float fiyat) {
         this.masaadi = masaadi;
         this.siparisarray = siparisarray;
         this.fiyat = fiyat;
@@ -31,5 +31,9 @@ public class Masa {
 
     public String getMasaadi(){
         return masaadi;
+    }
+
+    public ArrayList<String> getsiparisarray(){
+        return siparisarray;
     }
 }

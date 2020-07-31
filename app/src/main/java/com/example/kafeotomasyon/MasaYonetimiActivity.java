@@ -1,28 +1,29 @@
 package com.example.kafeotomasyon;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.kafeotomasyon.models.Masa;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import java.util.ArrayList;
 
+import static com.example.kafeotomasyon.MainActivity.database;
+
 public class MasaYonetimiActivity extends AppCompatActivity {
-    String[] icecekler = {"Listeden Seçiniz", "Çay", "Kahve", "Kola", "Limonata", "Hoşaf"};
-    String[] yiyecekler = {"Listeden Seçiniz", "Çorba", "Adana", "Kola", "Limonata", "Hoşaf"};
-    ArrayAdapter icecekadapter, yiyecekadapter;
-    private ArrayAdapter<String> iceceklistadapter, yiyeceklistadapter;
-    private ArrayList<String> icecekarray, yiyecekarray;
+    private ArrayAdapter<String> listadapter;
+    private ArrayList<String> siparisarray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,58 +37,32 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         setTitle("Masa Yönetimi");
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
-        Spinner icecekspin = (Spinner) findViewById(R.id.iceceklerspinner);
-        Spinner yiyecekspin = (Spinner) findViewById(R.id.yiyecekspinner);
+        Intent i = getIntent();
+        int id = i.getIntExtra("id",0);
+        String getmasa = masa_list.get(id);
 
         ListView iceceklistView = (ListView) findViewById(R.id.iceceklist);
-        ListView yiyeceklistView = (ListView) findViewById(R.id.yiyeceklist);
+        TextView title = (TextView) findViewById(R.id.textView1);
+        title.setText(getmasa);
 
-        icecekarray = new ArrayList<String>();
-        yiyecekarray = new ArrayList<String>();
-
-        iceceklistadapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, icecekarray);
-        yiyeceklistadapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, yiyecekarray);
-        iceceklistView.setAdapter(iceceklistadapter);
-        yiyeceklistView.setAdapter(yiyeceklistadapter);
-
-        icecekadapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, icecekler);
-        yiyecekadapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, yiyecekler);
-
-        icecekadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yiyecekadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        icecekspin.setAdapter(icecekadapter);
-        yiyecekspin.setAdapter(yiyecekadapter);
-
-        icecekspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ValueEventListener postListener = new ValueEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!parent.getItemAtPosition(position).toString().equals("Listeden Seçiniz")) {
-                    icecekarray.add(parent.getItemAtPosition(position).toString());
-                    iceceklistadapter.notifyDataSetChanged();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshot = dataSnapshot.child("masalar").getChildren();
+                for (DataSnapshot snapshot1 : snapshot) {
+                    Masa masa = snapshot1.getValue(Masa.class);
+                    if(masa.getMasaadi().equals(getmasa)) {
+                        siparisarray = masa.getsiparisarray();
+                        listadapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, siparisarray);
+                        iceceklistView.setAdapter(listadapter);
+                    }
                 }
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onCancelled(DatabaseError databaseError) {
             }
-        });
-
-        yiyecekspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!parent.getItemAtPosition(position).toString().equals("Listeden Seçiniz")) {
-                    yiyecekarray.add(parent.getItemAtPosition(position).toString());
-                    yiyeceklistadapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        };
+        database.addValueEventListener(postListener);
 
     }
 

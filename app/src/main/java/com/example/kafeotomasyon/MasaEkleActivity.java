@@ -2,6 +2,7 @@ package com.example.kafeotomasyon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,9 +20,12 @@ import com.example.kafeotomasyon.models.Masa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 import static com.example.kafeotomasyon.MainActivity.database;
+import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import static com.example.kafeotomasyon.Utils.Constants.masalar;
 import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
@@ -60,6 +64,10 @@ public class MasaEkleActivity extends AppCompatActivity {
             }
         });
 
+        for (int i=0;i<masa_list.size();i++){
+            masalar.remove(masa_list.get(i));
+        }
+
         ArrayAdapter masaadapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, masalar);
         masaspinner.setAdapter(masaadapter);
         masaspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -86,7 +94,6 @@ public class MasaEkleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
-            //todo
             FirebaseSave();
             return true;
         }
@@ -94,9 +101,10 @@ public class MasaEkleActivity extends AppCompatActivity {
     }
 
     private void FirebaseSave(){
-        Masa masa = new Masa(masaadi, siparisarray,25);
+        Masa masa = new Masa(masaadi, siparisarray, 5);//todo
         Map<String, Object> postValues = masa.toMap();
         databaseMasa.push().setValue(postValues);
+        siparisarray = new ArrayList<String>();
         finish();
     }
 

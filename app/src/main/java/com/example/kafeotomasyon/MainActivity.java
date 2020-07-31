@@ -1,7 +1,6 @@
 package com.example.kafeotomasyon;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 import com.example.kafeotomasyon.models.MenuModel;
@@ -26,7 +25,7 @@ import java.util.List;
 import static com.example.kafeotomasyon.Utils.Constants.adetler;
 import static com.example.kafeotomasyon.Utils.Constants.menuler;
 import static com.example.kafeotomasyon.Utils.Constants.menuler2;
-import static com.example.kafeotomasyon.Utils.Constants.sogukicecekler;
+import static com.example.kafeotomasyon.Utils.Constants.menuicerikleri;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     if (iceriksayisi<menu.getUrunSize())
                         iceriksayisi=menu.getUrunSize();
                 }
-                sogukicecekler = new String[menusayisi][iceriksayisi];
+                menuicerikleri = new String[menusayisi][iceriksayisi];
                 adetler = new int[menusayisi][iceriksayisi];
                 menucek();
             }
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         List<Urun> urunler = menu.getUrunler();
                         urunboyutu[0] = menu.getUrunSize();
                         for (int c = 0; c<urunboyutu[0]; c++){
-                            sogukicecekler[i[0]][c]=urunler.get(c).getUrunadi();
+                            menuicerikleri[i[0]][c]=urunler.get(c).getUrunadi();
                         }
                         i[0]++;
                     }

@@ -21,6 +21,7 @@ import static com.example.kafeotomasyon.Utils.Constants.menuler;
 public class MenuEkleFragment extends Fragment {
     ListView listItemView;
     FloatingActionButton fab;
+    ArrayAdapter<String> adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class MenuEkleFragment extends Fragment {
 
         listItemView = (ListView) root.findViewById(R.id.listView1);
         fab = (FloatingActionButton) root.findViewById(R.id.fab1);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, menuler);
+         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, menuler);
 
         listItemView.setAdapter(adapter);
         listItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -47,5 +48,11 @@ public class MenuEkleFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

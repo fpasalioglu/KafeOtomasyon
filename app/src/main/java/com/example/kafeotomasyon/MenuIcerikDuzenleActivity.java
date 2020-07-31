@@ -39,6 +39,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
     private TextView empty;
     List<Urun> urunler = new ArrayList<Urun>();
     private DatabaseReference databaseUrun;
+    private UrunAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +64,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         Intent intent=getIntent();
         menuadi.setText(intent.getStringExtra("id"));
 
-        UrunAdapter adapter = new UrunAdapter(this, urunler);
-        listView.setAdapter(adapter);
+
         listView.setEmptyView(empty);
 
         ekle.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +101,10 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
 
                     if (menu.getMenuadi().equals(menuadi.getText().toString())){
                         urunler= menu.getUrunler();
-                        adapter.notifyDataSetChanged();
                     }
                 }
+                adapter = new UrunAdapter(MenuIcerikDuzenleActivity.this, urunler);
+                listView.setAdapter(adapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -134,7 +135,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         MenuModel menu = new MenuModel(menuadi.getText().toString(), urunler);
         Map<String, Object> postValues = menu.toMap();
 
-        databaseUrun.push().updateChildren(postValues);//todo bozuk
+        databaseUrun.push().updateChildren(postValues);//todo Guncelleme kodu hatali
         finish();
     }
 }
