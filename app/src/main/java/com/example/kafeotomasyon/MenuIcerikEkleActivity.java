@@ -105,8 +105,9 @@ public class MenuIcerikEkleActivity extends AppCompatActivity {
 
     private void FirebaseSave(){
         MenuModel menu = new MenuModel(menuadi.getText().toString(), urunler);
+        String menuID = menuadi.getText().toString();
         Map<String, Object> postValues = menu.toMap();
-        databaseUrun.push().setValue(postValues);
+        databaseUrun.child(menuID).setValue(postValues);
         finish();
     }
 }

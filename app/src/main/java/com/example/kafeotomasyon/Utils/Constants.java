@@ -8,8 +8,7 @@ public class Constants {
     public static String[] menuler;
     public static List<String> menuler2 = new ArrayList<String>();
 
-    public static List<String> masalar;
-
+    public static List<String> kullanilabirMasalar;
     public static List<String> masa_list;
 
     public static ArrayList<String> siparisarray = new ArrayList<String>();

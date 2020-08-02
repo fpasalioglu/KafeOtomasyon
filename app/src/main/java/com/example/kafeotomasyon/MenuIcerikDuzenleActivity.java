@@ -142,8 +142,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
     private void FirebaseSave(){
         MenuModel menu = new MenuModel(menuadi.getText().toString(), urunler);
         Map<String, Object> postValues = menu.toMap();
-
-        databaseUrun.push().updateChildren(postValues);//todo Guncelleme kodu hatali
+        databaseUrun.child(menuadi.getText().toString()).updateChildren(postValues);
         finish();
     }
 }

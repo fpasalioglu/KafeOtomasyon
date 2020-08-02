@@ -2,6 +2,7 @@ package com.example.kafeotomasyon.ui.menuekle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +32,9 @@ public class MenuEkleFragment extends Fragment {
         listItemView = (ListView) root.findViewById(R.id.listView1);
         fab = (FloatingActionButton) root.findViewById(R.id.fab1);
         empty = (TextView) root.findViewById(R.id.emptyText);
-        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, menuler);
 
         listItemView.setEmptyView(empty);
-        listItemView.setAdapter(adapter);
+
         listItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Intent intent = new Intent(getContext(), MenuIcerikDuzenleActivity.class);
@@ -56,6 +56,7 @@ public class MenuEkleFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        adapter.notifyDataSetChanged();
+        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, menuler);
+        listItemView.setAdapter(adapter);
     }
 }

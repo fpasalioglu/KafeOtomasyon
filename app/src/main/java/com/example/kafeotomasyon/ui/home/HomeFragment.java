@@ -2,7 +2,6 @@ package com.example.kafeotomasyon.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import java.util.ArrayList;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import static com.example.kafeotomasyon.MainActivity.database;
-import static com.example.kafeotomasyon.Utils.Constants.masalar;
+import static com.example.kafeotomasyon.Utils.Constants.kullanilabirMasalar;
 
 public class HomeFragment extends Fragment {
     GridView gridView;
@@ -44,11 +43,11 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         masa_list = new ArrayList<String>();
-        masalar = new ArrayList<String>();
+        kullanilabirMasalar = new ArrayList<String>();
 
-        masalar.add("Masa numarası seçiniz");
+        kullanilabirMasalar.add("Masa numarası seçiniz");
         for (int i=1;i<=15;i++){
-            masalar.add("Masa "+i);
+            kullanilabirMasalar.add("Masa "+i);
         }
 
         gridView = (GridView) root.findViewById(R.id.gridView1);
