@@ -41,6 +41,7 @@ public class Urun {
     public void adetArttir() {
         this.adet ++;
     }
+
     public void adetAzalt() {
         if (this.adet!=0)
             this.adet --;

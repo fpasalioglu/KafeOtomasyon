@@ -1,5 +1,6 @@
 package com.example.kafeotomasyon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +46,8 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
             listAdapter.siparisler();
+            Intent intent = getIntent();
+            setResult(RESULT_OK, intent);
             finish();
             return true;
         }

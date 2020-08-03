@@ -103,7 +103,7 @@ public class MasaEkleActivity extends AppCompatActivity {
     }
 
     private void FirebaseSave(){
-        Masa masa = new Masa(masaadi, siparisarray);//todo
+        Masa masa = new Masa(masaadi, siparisarray);
         Map<String, Object> postValues = masa.toMap();
         databaseMasa.child(masaadi).setValue(postValues);
         siparisarray.clear();

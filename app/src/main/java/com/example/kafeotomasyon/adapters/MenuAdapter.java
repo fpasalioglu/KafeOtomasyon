@@ -128,7 +128,12 @@ public class MenuAdapter extends BaseExpandableListAdapter {
             for (int j = 0; j<getChildrenCount(i); j++){
                 Urun urun = (Urun) getChild(i, j);
                 if (urun.getAdet() > 0){
+                    for (int c = 0;c<siparisarray.size();c++){
+                        if (siparisarray.get(c).getSiparisadi()==urun.getUrunadi())
+                            siparisarray.remove(c);
+                    }
                     siparisarray.add(new Siparis(urun.getUrunadi(),urun.getAdet(),urun.getBirimfiyat()*urun.getAdet()));
+                    urun.setAdet(0);
                 }
             }
         }

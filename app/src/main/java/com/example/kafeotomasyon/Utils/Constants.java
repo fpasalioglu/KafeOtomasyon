@@ -15,4 +15,6 @@ public class Constants {
     public static List<String> masa_list;
 
     public static ArrayList<Siparis> siparisarray = new ArrayList<Siparis>();
+
+    public static final int REQUEST_CODE = 1;
 }

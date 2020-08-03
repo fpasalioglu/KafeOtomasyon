@@ -24,6 +24,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.example.kafeotomasyon.Utils.Constants.REQUEST_CODE;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import java.util.ArrayList;
 import java.util.Map;
@@ -83,8 +85,8 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent i = new Intent(getApplication(), MenuActivity.class);
-                startActivity(i);*///todo
+                Intent i = new Intent(getApplication(), MenuActivity.class);
+                startActivityForResult(i , REQUEST_CODE);
             }
         });
 
@@ -132,11 +134,22 @@ public class MasaYonetimiActivity extends AppCompatActivity {
     }
 
     private void FirebaseSave(){
-        Masa masa = new Masa(getmasa, siparisarray);//todo
+        Masa masa = new Masa(getmasa, siparisarray);
         Map<String, Object> postValues = masa.toMap();
         databaseMasa.child(getmasa).updateChildren(postValues);
         siparisarray.clear();
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == REQUEST_CODE  && resultCode  == RESULT_OK) {
+                listadapter.notifyDataSetChanged();
+            }
+        } catch (Exception ex) {
+        }
     }
 
 }

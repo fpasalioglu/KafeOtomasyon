@@ -1,7 +1,6 @@
 package com.example.kafeotomasyon.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +29,10 @@ public class MasaAdapter extends BaseAdapter {
         if (convertView == null) {
             gridView = new View(context);
             gridView = inflater.inflate(R.layout.grid_item, null);
-//todo pozisyon 1 geliyor
-            // set value into textview
+
             TextView textView = (TextView) gridView.findViewById(R.id.grid_item_label);
             textView.setText(list.get(position));
 
-            // set image based on selected text
             ImageView imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
             imageView.setImageResource(R.drawable.table);
         } else {
