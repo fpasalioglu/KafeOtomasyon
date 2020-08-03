@@ -1,7 +1,9 @@
 package com.example.kafeotomasyon;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,12 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.kafeotomasyon.common.MenuActivity;
+import com.example.kafeotomasyon.adapters.SiparisAdapter;
 import com.example.kafeotomasyon.models.Masa;
+import com.example.kafeotomasyon.models.Siparis;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 
@@ -28,7 +32,7 @@ import static com.example.kafeotomasyon.Utils.Constants.kullanilabirMasalar;
 import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaEkleActivity extends AppCompatActivity {
-    ArrayAdapter siparisadapter;
+    SiparisAdapter siparisadapter;
     String masaadi;
     private DatabaseReference databaseMasa;
 
@@ -49,9 +53,9 @@ public class MasaEkleActivity extends AppCompatActivity {
         FloatingActionButton fab =(FloatingActionButton) findViewById(R.id.fab1);
         ListView siparislist = (ListView) findViewById(R.id.listsiparis);
         TextView emptytext = (TextView) findViewById(R.id.emptyText);
+        siparisarray.clear();
         siparislist.setEmptyView(emptytext);
-
-        siparisadapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, siparisarray);
+        siparisadapter = new SiparisAdapter(getApplicationContext(), siparisarray);
         siparislist.setAdapter(siparisadapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,13 +70,13 @@ public class MasaEkleActivity extends AppCompatActivity {
             kullanilabirMasalar.remove(masa_list.get(i));
         }
 
-        ArrayAdapter masaadapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, kullanilabirMasalar);
+        ArrayAdapter<String> masaadapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, kullanilabirMasalar);
         masaspinner.setAdapter(masaadapter);
         masaspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (!parent.getItemAtPosition(position).toString().equals("Masa numarası seçiniz")) {
-                    masaadi=parent.getItemAtPosition(position).toString();
+                    masaadi = parent.getItemAtPosition(position).toString();
                 }
             }
 
@@ -99,7 +103,7 @@ public class MasaEkleActivity extends AppCompatActivity {
     }
 
     private void FirebaseSave(){
-        Masa masa = new Masa(masaadi, siparisarray, 5);//todo
+        Masa masa = new Masa(masaadi, siparisarray);//todo
         Map<String, Object> postValues = masa.toMap();
         databaseMasa.child(masaadi).setValue(postValues);
         siparisarray.clear();

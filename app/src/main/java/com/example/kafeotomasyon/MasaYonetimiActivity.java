@@ -16,10 +16,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.kafeotomasyon.Utils.Constants;
-import com.example.kafeotomasyon.common.MenuActivity;
+import com.example.kafeotomasyon.adapters.SiparisAdapter;
 import com.example.kafeotomasyon.models.Masa;
-import com.example.kafeotomasyon.models.Urun;
+import com.example.kafeotomasyon.models.Siparis;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,9 +32,11 @@ import static com.example.kafeotomasyon.MainActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaYonetimiActivity extends AppCompatActivity {
-    private ArrayAdapter<String> listadapter;
+    private SiparisAdapter listadapter;
     private DatabaseReference databaseMasa;
     private String getmasa;
+    float fiyat = 0;
+    TextView fiyatText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         ListView siparisListView = (ListView) findViewById(R.id.iceceklist);
         FloatingActionButton fab =(FloatingActionButton) findViewById(R.id.fab1);
         TextView title = (TextView) findViewById(R.id.textView1);
+        fiyatText = (TextView) findViewById(R.id.textView3);
         title.setText(getmasa);
         TextView emptytext = (TextView) findViewById(R.id.emptyText);
         siparisListView.setEmptyView(emptytext);
@@ -81,8 +83,8 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplication(), MenuActivity.class);
-                startActivity(i);
+               /* Intent i = new Intent(getApplication(), MenuActivity.class);
+                startActivity(i);*///todo
             }
         });
 
@@ -95,9 +97,13 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                     if(masa.getMasaadi().equals(getmasa)) {
                         siparisarray = masa.getsiparisarray();
                         if (siparisarray == null) {
-                            siparisarray = new ArrayList<String>();
+                            siparisarray = new ArrayList<Siparis>();
                         }
-                        listadapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, siparisarray);
+                        for (int i = 0; i<siparisarray.size(); i++){
+                            fiyat += siparisarray.get(i).getFiyat();
+                        }
+                        fiyatText.setText("Masa Tutarı: "+fiyat+"₺");
+                        listadapter = new SiparisAdapter(getApplicationContext(), siparisarray);
                         siparisListView.setAdapter(listadapter);
                     }
                 }
@@ -126,7 +132,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
     }
 
     private void FirebaseSave(){
-        Masa masa = new Masa(getmasa, siparisarray, 5);//todo
+        Masa masa = new Masa(getmasa, siparisarray);//todo
         Map<String, Object> postValues = masa.toMap();
         databaseMasa.child(getmasa).updateChildren(postValues);
         siparisarray.clear();

@@ -60,7 +60,7 @@ public class MenuIcerikEkleActivity extends AppCompatActivity {
         ekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urunler.add(new Urun(urunadi.getText().toString(), birimEdittext.getText().toString()+" ₺"));
+                urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
                 adapter.notifyDataSetChanged();
                 birimEdittext.setText("");
                 urunadi.setText("");

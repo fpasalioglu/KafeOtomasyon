@@ -2,23 +2,21 @@ package com.example.kafeotomasyon.models;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Siparis {
+public class Siparis implements java.io.Serializable{
     String siparisadi;
     int adet;
-    float birimfiyat;
     float fiyat;
 
     public Siparis(){
     }
 
-    public Siparis(String siparisadi, int adet, float birimfiyat) {
+    public Siparis(String siparisadi, int adet, float fiyat) {
         this.siparisadi = siparisadi;
         this.adet = adet;
-        this.birimfiyat = birimfiyat;
+        this.fiyat = fiyat;
     }
 
     @Exclude
@@ -26,7 +24,6 @@ public class Siparis {
         HashMap<String, Object> result = new HashMap<>();
         result.put("siparisadi", siparisadi);
         result.put("adet", adet);
-        result.put("birimfiyat", birimfiyat);
         result.put("fiyat", fiyat);
         return result;
     }
@@ -36,6 +33,10 @@ public class Siparis {
     }
 
     public float getFiyat(){
-        return adet*birimfiyat;
+        return fiyat;
+    }
+
+    public int getAdet(){
+        return adet;
     }
 }

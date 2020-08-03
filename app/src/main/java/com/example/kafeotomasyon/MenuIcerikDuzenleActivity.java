@@ -3,7 +3,6 @@ package com.example.kafeotomasyon;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,18 +63,19 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         Intent intent=getIntent();
         menuadi.setText(intent.getStringExtra("id"));
 
-
         listView.setEmptyView(empty);
 
         ekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (urunler!=null) {
-                    urunler.add(new Urun(urunadi.getText().toString(), birimEdittext.getText().toString() + " ₺"));
+                    urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
                 }else{
                     urunler = new ArrayList<Urun>();
-                    urunler.add(new Urun(urunadi.getText().toString(), birimEdittext.getText().toString() + " ₺"));
+                    urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
                 }
+                birimEdittext.setText("");
+                urunadi.setText("");
                 adapter.notifyDataSetChanged();
             }
         });

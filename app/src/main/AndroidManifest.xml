@@ -29,8 +29,6 @@
         <activity android:name=".KayitEkraniActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".common.MenuActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".MenuIcerikEkleActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -39,6 +37,8 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".MasaEkleActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".MenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

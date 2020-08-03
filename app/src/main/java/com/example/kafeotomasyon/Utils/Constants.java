@@ -1,16 +1,18 @@
 package com.example.kafeotomasyon.Utils;
 
+import com.example.kafeotomasyon.models.Siparis;
+import com.example.kafeotomasyon.models.Urun;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Constants {
-    public static String[][] menuicerikleri;
-    public static String[] menuler;
-    public static List<String> menuler2 = new ArrayList<String>();
+    public static List<String> menuisimler = new ArrayList<String>();
+    public static HashMap<String, List<Urun>> menuicerik = new HashMap<>();
 
     public static List<String> kullanilabirMasalar;
     public static List<String> masa_list;
 
-    public static ArrayList<String> siparisarray = new ArrayList<String>();
-    public static int[][] adetler;
+    public static ArrayList<Siparis> siparisarray = new ArrayList<Siparis>();
 }

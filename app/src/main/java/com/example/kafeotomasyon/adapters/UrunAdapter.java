@@ -50,7 +50,7 @@ public class UrunAdapter extends BaseAdapter {
 
         Urun urun = urunList.get(i);
         textViewUrunAdi.setText(urun.getUrunadi());
-        textViewBirimFiyat.setText(urun.getBirimfiyat());
+        textViewBirimFiyat.setText(String.valueOf(urun.getBirimfiyat()));
 
         return lineView;
     }

@@ -2,7 +2,6 @@ package com.example.kafeotomasyon.ui.menuekle;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import com.example.kafeotomasyon.MenuIcerikDuzenleActivity;
 import com.example.kafeotomasyon.MenuIcerikEkleActivity;
 import com.example.kafeotomasyon.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import static com.example.kafeotomasyon.Utils.Constants.menuler;
+import static com.example.kafeotomasyon.Utils.Constants.menuisimler;
 
 public class MenuEkleFragment extends Fragment {
     ListView listItemView;
@@ -38,7 +37,7 @@ public class MenuEkleFragment extends Fragment {
         listItemView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Intent intent = new Intent(getContext(), MenuIcerikDuzenleActivity.class);
-                intent.putExtra("id", menuler[arg2]);
+                intent.putExtra("id", menuisimler.get(arg2));
                 startActivity(intent);
             }
         });
@@ -56,7 +55,7 @@ public class MenuEkleFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, menuler);
+        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, menuisimler);
         listItemView.setAdapter(adapter);
     }
 }

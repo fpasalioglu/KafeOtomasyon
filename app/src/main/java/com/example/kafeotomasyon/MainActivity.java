@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.example.kafeotomasyon.models.MenuModel;
-import com.example.kafeotomasyon.models.Urun;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,19 +19,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.List;
-
-import static com.example.kafeotomasyon.Utils.Constants.adetler;
-import static com.example.kafeotomasyon.Utils.Constants.menuler;
-import static com.example.kafeotomasyon.Utils.Constants.menuler2;
-import static com.example.kafeotomasyon.Utils.Constants.menuicerikleri;
+import static com.example.kafeotomasyon.Utils.Constants.menuicerik;
+import static com.example.kafeotomasyon.Utils.Constants.menuisimler;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     public static DatabaseReference database;
-    final int[] i = {0};
-    final int[] urunboyutu = new int[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         database = FirebaseDatabase.getInstance().getReference();
-
-        menusayicek();
+        menucek();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -56,30 +48,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    int menusayisi=0;
-    int iceriksayisi=0;
-    void menusayicek(){
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> snapshot = dataSnapshot.child("menuler").getChildren();
-                for (DataSnapshot snapshot1 : snapshot) {
-                    MenuModel menu = snapshot1.getValue(MenuModel.class);
-                    menusayisi++;
-                    if (iceriksayisi<menu.getUrunSize())
-                        iceriksayisi=menu.getUrunSize();
-                }
-                menuicerikleri = new String[menusayisi][iceriksayisi];
-                adetler = new int[menusayisi][iceriksayisi];
-                menucek();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        };
-        database.addValueEventListener(postListener);
-    }
-
     void menucek(){
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -87,17 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.child("menuler").getChildren();
                 for (DataSnapshot snapshot1 : snapshot) {
                     MenuModel menu = snapshot1.getValue(MenuModel.class);
-                    if (!menuler2.contains(menu.getMenuadi())) {
-                        menuler2.add(menu.getMenuadi());
-                        List<Urun> urunler = menu.getUrunler();
-                        urunboyutu[0] = menu.getUrunSize();
-                        for (int c = 0; c<urunboyutu[0]; c++){
-                            menuicerikleri[i[0]][c]=urunler.get(c).getUrunadi();
-                        }
-                        i[0]++;
+                    if (!menuisimler.contains(menu.getMenuadi())) {
+                        menuisimler.add(menu.getMenuadi());
+                        menuicerik.put(menu.getMenuadi(), menu.getUrunler());
                     }
                 }
-                menuler = menuler2.toArray(new String[0]);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

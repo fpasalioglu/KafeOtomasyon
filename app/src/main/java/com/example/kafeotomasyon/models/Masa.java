@@ -8,16 +8,14 @@ import java.util.Map;
 
 public class Masa {
     String masaadi;
-    ArrayList<String> siparisarray;
-    float fiyat;
+    ArrayList<Siparis> siparisarray;
 
     public Masa(){
     }
 
-    public Masa(String masaadi, ArrayList<String> siparisarray, float fiyat) {
+    public Masa(String masaadi, ArrayList<Siparis> siparisarray) {
         this.masaadi = masaadi;
         this.siparisarray = siparisarray;
-        this.fiyat = fiyat;
     }
 
     @Exclude
@@ -25,7 +23,6 @@ public class Masa {
         HashMap<String, Object> result = new HashMap<>();
         result.put("masaadi", masaadi);
         result.put("siparisarray", siparisarray);
-        result.put("fiyat", fiyat);
         return result;
     }
 
@@ -33,7 +30,7 @@ public class Masa {
         return masaadi;
     }
 
-    public ArrayList<String> getsiparisarray(){
+    public ArrayList<Siparis> getsiparisarray(){
         return siparisarray;
     }
 }
