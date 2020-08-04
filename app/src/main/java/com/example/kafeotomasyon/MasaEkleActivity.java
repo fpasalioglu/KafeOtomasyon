@@ -25,8 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 import java.util.Map;
-
-import static com.example.kafeotomasyon.MainActivity.database;
+import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import static com.example.kafeotomasyon.Utils.Constants.kullanilabirMasalar;
 import static com.example.kafeotomasyon.Utils.Constants.siparisarray;

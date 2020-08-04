@@ -27,7 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.ArrayList;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
-import static com.example.kafeotomasyon.MainActivity.database;
+import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.kullanilabirMasalar;
 
 public class HomeFragment extends Fragment {

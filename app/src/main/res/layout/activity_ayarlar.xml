@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include android:id="@+id/tool"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_below="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kullanıcı İşlemleri"
+        android:textSize="21dp"
+        android:textAlignment="center"
+        android:textColor="#2196F3"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/registerName"
+        android:padding="15dp"
+        android:layout_below="@+id/textView1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:hint="İsim" />
+
+    <EditText
+        android:id="@+id/registerUserName"
+        android:padding="15dp"
+        android:layout_below="@+id/registerName"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Eposta" />
+
+    <EditText
+        android:inputType="textPassword"
+        android:padding="15dp"
+        android:layout_below="@+id/registerUserName"
+        android:id="@+id/registerPassword"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:hint="Şifre" />
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:padding="15dp"
+        android:layout_below="@+id/registerPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Garson" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kasiyer" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Yönetici" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonKaydet"
+        android:layout_below="@+id/radio"
+        android:background="@color/colorAccent"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textColor="#ffffff"
+        android:text="Güncelle"/>
+
+    <Button
+        android:id="@+id/buttonCikis"
+        android:layout_below="@+id/buttonKaydet"
+        android:background="#FD6356"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textColor="#ffffff"
+        android:text="Çıkış Yap"/>
+
+
+</RelativeLayout>

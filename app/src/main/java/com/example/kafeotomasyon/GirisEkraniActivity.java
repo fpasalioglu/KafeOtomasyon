@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class GirisEkraniActivity extends AppCompatActivity {
 
@@ -27,6 +29,8 @@ public class GirisEkraniActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private String userName;
     private String userPassword;
+    public static DatabaseReference database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,7 @@ public class GirisEkraniActivity extends AppCompatActivity {
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         txtRegister = (TextView) findViewById(R.id.txtRegister);
 
+        database = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser(); // authenticated user
 

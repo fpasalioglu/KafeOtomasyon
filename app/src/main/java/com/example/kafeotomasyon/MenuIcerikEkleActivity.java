@@ -23,8 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static com.example.kafeotomasyon.MainActivity.database;
+import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 
 public class MenuIcerikEkleActivity extends AppCompatActivity {
     private EditText menuadi, birimEdittext, urunadi;

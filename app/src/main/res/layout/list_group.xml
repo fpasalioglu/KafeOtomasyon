@@ -4,10 +4,9 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:layout_marginTop="5dp"
-    android:background="@color/colorAccent"
+    android:background="#ff88dd88"
     android:orientation="horizontal"
     android:padding="8dp">
-
 
     <TextView
         android:id="@+id/lblListHeader"
@@ -16,6 +15,6 @@
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textColor="@android:color/white"
         android:textAlignment="center"
-        android:textSize="26dp" />
+        android:textSize="24dp" />
 
 </LinearLayout>

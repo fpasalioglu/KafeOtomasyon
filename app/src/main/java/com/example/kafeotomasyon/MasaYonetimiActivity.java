@@ -29,8 +29,7 @@ import static com.example.kafeotomasyon.Utils.Constants.REQUEST_CODE;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import java.util.ArrayList;
 import java.util.Map;
-
-import static com.example.kafeotomasyon.MainActivity.database;
+import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaYonetimiActivity extends AppCompatActivity {
