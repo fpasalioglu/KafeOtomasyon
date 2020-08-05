@@ -95,7 +95,7 @@ public class MasaEkleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
-            FirebaseSave();
+            FirebaseSave(); //todo masaisim zorunlulugu
             return true;
         }
         return super.onOptionsItemSelected(item);

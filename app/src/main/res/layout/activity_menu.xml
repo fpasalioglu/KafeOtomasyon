@@ -9,6 +9,7 @@
         layout="@layout/toolbar" />
 
     <ExpandableListView
+        android:layout_marginTop="1dp"
         android:id="@+id/lvExp"
         android:layout_below="@+id/tool"
         android:layout_width="match_parent"

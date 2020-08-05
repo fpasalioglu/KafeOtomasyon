@@ -3,7 +3,7 @@
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="50dp"
     android:background="@android:color/transparent">
 
     <FrameLayout
@@ -17,37 +17,42 @@
         <TextView
             android:id="@+id/textviewmenu"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:layout_gravity="top|left"
-            android:layout_marginRight="216dp"
+            android:layout_marginRight="195dp"
             android:text="Çay"
             android:gravity="center"/>
 
         <Button
             android:id="@+id/button_azalt"
             style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="72dp"
-            android:layout_height="48dp"
+            android:layout_width="66dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_azalt"
+            android:textColor="@color/white"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="144dp"
+            android:layout_marginRight="120dp"
             android:text="Azalt"
             android:textSize="12dp"/>
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="72dp"
+            android:layout_width="40dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical|right"
-            android:layout_marginEnd="72dp"
+            android:layout_marginEnd="75dp"
             android:text="0"
             android:gravity="center"
-            android:textSize="12dp"/>
+            android:textSize="16dp"/>
 
         <Button
             android:id="@+id/button_arttir"
             style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="72dp"
-            android:layout_height="48dp"
+            android:layout_width="66dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_arti"
+            android:textColor="@color/white"
             android:layout_gravity="center_vertical|right"
             android:text="Arttır"
             android:textSize="12dp"/>

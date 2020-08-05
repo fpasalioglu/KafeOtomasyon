@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -39,7 +40,7 @@ import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaYonetimiActivity extends AppCompatActivity {
     private SiparisAdapter listadapter;
-    private DatabaseReference databaseMasa, databaseKasa;
+    private DatabaseReference databaseMasa, databaseKasa, databaseNakit, databaseKredi;
     private String getmasa;
     private float fiyat = 0;
     private TextView fiyatText;
@@ -61,7 +62,9 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         databaseMasa = database.child("masalar");
-        databaseKasa = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth));
+        databaseKasa = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("toplam");
+        databaseNakit = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("nakit");
+        databaseKredi = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("kredi");
 
         myDialog = new Dialog(this);
         Intent i = getIntent();
@@ -157,14 +160,25 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         finish();
     }
 
+    boolean kredi = false;
     public void ShowPopup(View v) {
         TextView txtclose, masaText, tutar;
         Button btnKapat;
+        RadioGroup radioGroup;
+
         myDialog.setContentView(R.layout.masakapat_popup);
         txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
         masaText =(TextView) myDialog.findViewById(R.id.masaname);
         tutar =(TextView) myDialog.findViewById(R.id.toplamtutar);
         btnKapat = (Button) myDialog.findViewById(R.id.btnKapat);
+        radioGroup = (RadioGroup) myDialog.findViewById(R.id.radio);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                kredi = checkedId == R.id.radioButton5;
+            }
+        });
 
         tutar.setText(fiyat+"₺");
         masaText.setText(getmasa);
@@ -198,6 +212,16 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                 HashMap<String, Object> result = new HashMap<>();
                 result.put("hasilat", eski + fiyat);
                 databaseKasa.setValue(result);
+
+                if (kredi){
+                    HashMap<String, Object> result2 = new HashMap<>();
+                    result2.put("hasilat", eski + fiyat);  //todo nakit kredi toplamını cek
+                    databaseKredi.setValue(result2);
+                }else {
+                    HashMap<String, Object> result3 = new HashMap<>();
+                    result3.put("hasilat", eski + fiyat);
+                    databaseNakit.setValue(result3);
+                }
 
                 databaseMasa.child(getmasa).removeValue();
                 myDialog.dismiss();

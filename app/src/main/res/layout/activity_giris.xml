@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B9FBFB">
+    android:background="@drawable/gradient">
 
         <LinearLayout
             android:layout_centerInParent="true"
@@ -14,12 +14,12 @@
 
             <ImageView
                 android:id="@+id/imageViewLogo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
                 android:layout_gravity="center"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@drawable/cafelogo" />
 
             <EditText
                 android:id="@+id/editTextUserName"
@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="Kullanıcı Adınız"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColorHint="#fff"/>
 
             <EditText
                 android:id="@+id/editTextUserPassword"
@@ -35,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="Şifreniz"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColorHint="#fff"/>
 
             <Button
                 android:textAllCaps="false"
@@ -44,10 +46,11 @@
                 android:id="@+id/buttonLogin"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:background="#C8084FF5"
-                android:textColor="#FFFFFF"
+                android:background="#FFFFF5"
+                android:textColor="#C8084FF5"
                 android:layout_height="wrap_content"
-                android:text="Giriş" />
+                android:text="Giriş"
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/txtRegister"
@@ -55,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textAlignment="center"
-                android:textColor="#000"
+                android:textColor="#FFF"
                 android:textSize="18dp"
                 android:text="Kayıt Ol!" />
 
