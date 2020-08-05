@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,6 +45,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
     private TextView fiyatText;
     private Dialog myDialog;
     private float eski;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +58,10 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         setTitle("Masa Yönetimi");
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
+        Calendar cal = Calendar.getInstance();
+        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         databaseMasa = database.child("masalar");
-        databaseKasa = database.child("gunlukhasilat");
+        databaseKasa = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth));
 
         myDialog = new Dialog(this);
         Intent i = getIntent();
@@ -100,14 +102,8 @@ public class MasaYonetimiActivity extends AppCompatActivity {
             }
         });
 
-        if (kullanici.getGorev().equals("kasiyer")){
+        if (kullanici.getGorev().equals("kasiyer") || kullanici.getGorev().equals("yonetici")){
             kapatma.setVisibility(View.VISIBLE);
-           /* kapatma.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });*/
         }
 
         ValueEventListener postListener = new ValueEventListener() {
@@ -180,15 +176,31 @@ public class MasaYonetimiActivity extends AppCompatActivity {
             }
         });
 
-        Calendar cal = Calendar.getInstance();
-        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value="";
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    value = ds.getValue().toString();
+                }
+                if (!value.equals(""))
+                eski = Float.parseFloat(value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseKasa.addListenerForSingleValueEvent(eventListener);
 
         btnKapat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HashMap<String, Object> result = new HashMap<>();
-                result.put("hasilat", fiyat);
-                databaseKasa.child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).setValue(result);
+                result.put("hasilat", eski + fiyat);
+                databaseKasa.setValue(result);
+
+                databaseMasa.child(getmasa).removeValue();
+                myDialog.dismiss();
                 finish();
             }
         });
