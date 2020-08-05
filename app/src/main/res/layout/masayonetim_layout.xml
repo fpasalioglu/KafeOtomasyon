@@ -72,4 +72,19 @@
         app:srcCompat="@drawable/add"
         app:elevation="4dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/done"
+        android:backgroundTint="#FF8A80"
+        android:visibility="gone"
+        app:elevation="4dp"
+        android:onClick="ShowPopup"/>
+
 </RelativeLayout>

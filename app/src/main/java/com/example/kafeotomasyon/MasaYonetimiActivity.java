@@ -1,14 +1,17 @@
 package com.example.kafeotomasyon;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,19 +29,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.example.kafeotomasyon.Utils.Constants.REQUEST_CODE;
+import static com.example.kafeotomasyon.Utils.Constants.kullanici;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaYonetimiActivity extends AppCompatActivity {
     private SiparisAdapter listadapter;
-    private DatabaseReference databaseMasa;
+    private DatabaseReference databaseMasa, databaseKasa;
     private String getmasa;
-    float fiyat = 0;
-    TextView fiyatText;
-
+    private float fiyat = 0;
+    private TextView fiyatText;
+    private Dialog myDialog;
+    private float eski;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +57,18 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         setTitle("Masa Yönetimi");
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
-        databaseMasa = database.child("masalar");
 
+        databaseMasa = database.child("masalar");
+        databaseKasa = database.child("gunlukhasilat");
+
+        myDialog = new Dialog(this);
         Intent i = getIntent();
         int id = i.getIntExtra("id",0);
         getmasa = masa_list.get(id);
 
         ListView siparisListView = (ListView) findViewById(R.id.iceceklist);
         FloatingActionButton fab =(FloatingActionButton) findViewById(R.id.fab1);
+        FloatingActionButton kapatma =(FloatingActionButton) findViewById(R.id.fab2);
         TextView title = (TextView) findViewById(R.id.textView1);
         fiyatText = (TextView) findViewById(R.id.textView3);
         title.setText(getmasa);
@@ -88,6 +99,16 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                 startActivityForResult(i , REQUEST_CODE);
             }
         });
+
+        if (kullanici.getGorev().equals("kasiyer")){
+            kapatma.setVisibility(View.VISIBLE);
+           /* kapatma.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });*/
+        }
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -138,6 +159,41 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         databaseMasa.child(getmasa).updateChildren(postValues);
         siparisarray.clear();
         finish();
+    }
+
+    public void ShowPopup(View v) {
+        TextView txtclose, masaText, tutar;
+        Button btnKapat;
+        myDialog.setContentView(R.layout.masakapat_popup);
+        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
+        masaText =(TextView) myDialog.findViewById(R.id.masaname);
+        tutar =(TextView) myDialog.findViewById(R.id.toplamtutar);
+        btnKapat = (Button) myDialog.findViewById(R.id.btnKapat);
+
+        tutar.setText(fiyat+"₺");
+        masaText.setText(getmasa);
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        Calendar cal = Calendar.getInstance();
+        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+
+        btnKapat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, Object> result = new HashMap<>();
+                result.put("hasilat", fiyat);
+                databaseKasa.child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).setValue(result);
+                finish();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 
     @Override
