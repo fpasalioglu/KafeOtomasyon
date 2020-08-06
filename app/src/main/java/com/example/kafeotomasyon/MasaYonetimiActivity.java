@@ -40,12 +40,12 @@ import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaYonetimiActivity extends AppCompatActivity {
     private SiparisAdapter listadapter;
-    private DatabaseReference databaseMasa, databaseKasa, databaseNakit, databaseKredi;
+    private DatabaseReference databaseMasa, databaseKasa, databaseNakit, databaseKredi, databaseAylik;
     private String getmasa;
     private float fiyat = 0;
     private TextView fiyatText;
     private Dialog myDialog;
-    private float eski;
+    private float eski, eskiNakit, eskiKredi, eskiAylik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         databaseKasa = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("toplam");
         databaseNakit = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("nakit");
         databaseKredi = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("kredi");
+        databaseAylik = database.child("aylikhasilat");
 
         myDialog = new Dialog(this);
         Intent i = getIntent();
@@ -206,6 +207,54 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         };
         databaseKasa.addListenerForSingleValueEvent(eventListener);
 
+        ValueEventListener eventListener2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value="";
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    value = ds.getValue().toString();
+                }
+                if (!value.equals(""))
+                    eskiNakit = Float.parseFloat(value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseNakit.addListenerForSingleValueEvent(eventListener2);
+
+        ValueEventListener eventListener3 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value="";
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    value = ds.getValue().toString();
+                }
+                if (!value.equals(""))
+                    eskiKredi = Float.parseFloat(value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseKredi.addListenerForSingleValueEvent(eventListener3);
+
+        ValueEventListener eventListener4 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String value="";
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    value = ds.getValue().toString();
+                }
+                if (!value.equals(""))
+                    eskiAylik = Float.parseFloat(value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseAylik.addListenerForSingleValueEvent(eventListener4);
+
         btnKapat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,13 +262,17 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                 result.put("hasilat", eski + fiyat);
                 databaseKasa.setValue(result);
 
+                HashMap<String, Object> result4 = new HashMap<>();
+                result4.put("hasilat", eskiAylik + fiyat);
+                databaseAylik.setValue(result4);
+
                 if (kredi){
                     HashMap<String, Object> result2 = new HashMap<>();
-                    result2.put("hasilat", eski + fiyat);  //todo nakit kredi toplamını cek
+                    result2.put("hasilat", eskiKredi + fiyat);
                     databaseKredi.setValue(result2);
                 }else {
                     HashMap<String, Object> result3 = new HashMap<>();
-                    result3.put("hasilat", eski + fiyat);
+                    result3.put("hasilat", eskiNakit + fiyat);
                     databaseNakit.setValue(result3);
                 }
 

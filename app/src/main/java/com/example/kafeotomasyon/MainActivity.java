@@ -2,9 +2,10 @@ package com.example.kafeotomasyon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.kafeotomasyon.models.MenuModel;
 import com.example.kafeotomasyon.models.User;
@@ -54,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    public void navTextChange(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.textView);
+        String cap = kullanici.getGorev().substring(0, 1).toUpperCase() + kullanici.getGorev().substring(1);
+        navUsername.setText(cap +": "+kullanici.getIsim());
+    }
+
     void menucek(){
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -85,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         kullanici = new User(user.getUid(), user.getIsim(), user.getGorev());
                     }
                 }
+                navTextChange();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

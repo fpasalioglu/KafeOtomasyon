@@ -22,8 +22,7 @@
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginStart="5dp" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -43,7 +42,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="Siparişler"
                 android:textColor="#FD8080"
@@ -53,8 +52,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#d1d1d1" />
 
             <ListView
