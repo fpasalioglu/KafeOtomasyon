@@ -3,6 +3,7 @@ package com.example.kafeotomasyon.Utils;
 import com.example.kafeotomasyon.models.Siparis;
 import com.example.kafeotomasyon.models.Urun;
 import com.example.kafeotomasyon.models.User;
+import com.github.mikephil.charting.data.BarData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,4 +20,5 @@ public class Constants {
 
     public static final int REQUEST_CODE = 1;
     public static User kullanici;
+    public static BarData d;
 }

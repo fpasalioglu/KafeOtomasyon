@@ -46,7 +46,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
     private TextView fiyatText;
     private Dialog myDialog;
     private float eski, eskiNakit, eskiKredi, eskiAylik;
-
+    int dayOfMonth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +60,12 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         Calendar cal = Calendar.getInstance();
-        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         databaseMasa = database.child("masalar");
         databaseKasa = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("toplam");
         databaseNakit = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("nakit");
         databaseKredi = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("kredi");
-        databaseAylik = database.child("aylikhasilat");
+        databaseAylik = database.child("aylikhasilat").child(String.valueOf(dayOfMonth));
 
         myDialog = new Dialog(this);
         Intent i = getIntent();
@@ -263,6 +263,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                 databaseKasa.setValue(result);
 
                 HashMap<String, Object> result4 = new HashMap<>();
+                result4.put("gun", String.valueOf(dayOfMonth));
                 result4.put("hasilat", eskiAylik + fiyat);
                 databaseAylik.setValue(result4);
 

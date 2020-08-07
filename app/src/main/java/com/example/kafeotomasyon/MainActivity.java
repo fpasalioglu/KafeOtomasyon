@@ -7,12 +7,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.kafeotomasyon.models.AylikHasilat;
 import com.example.kafeotomasyon.models.MenuModel;
 import com.example.kafeotomasyon.models.User;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.navigation.NavController;
@@ -23,15 +30,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+
 import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.menuicerik;
 import static com.example.kafeotomasyon.Utils.Constants.menuisimler;
 import static com.example.kafeotomasyon.Utils.Constants.kullanici;
+import static com.example.kafeotomasyon.Utils.Constants.d;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
+    private ArrayList<AylikHasilat> veriler = new ArrayList<>();
+    private DatabaseReference databaseAylik2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +52,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        databaseAylik2 = database.child("aylikhasilat");
         mAuth = FirebaseAuth.getInstance();
         kullaniciverisi();
         menucek();
+        generateBarData();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -101,6 +115,36 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         database.addValueEventListener(postListener);
+    }
+
+    public void generateBarData() {
+        ValueEventListener eventListener4 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
+                for (DataSnapshot snapshot1 : snapshot) {
+                    AylikHasilat aylikHasilat = snapshot1.getValue(AylikHasilat.class);
+                    veriler.add(aylikHasilat);
+                }
+
+                ArrayList<IBarDataSet> sets = new ArrayList<>();
+                ArrayList<BarEntry> entries = new ArrayList<>();
+
+                for(int j = 0; j < veriler.size(); j++) {
+                    entries.add(new BarEntry(Integer.parseInt(veriler.get(j).getGun()), veriler.get(j).getHasilat()));
+                }
+
+                BarDataSet ds = new BarDataSet(entries, "Aylık Hasılat");
+                ds.setColors(ColorTemplate.VORDIPLOM_COLORS);
+                sets.add(ds);
+
+                d = new BarData(sets);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseAylik2.addListenerForSingleValueEvent(eventListener4);
     }
 
     @Override

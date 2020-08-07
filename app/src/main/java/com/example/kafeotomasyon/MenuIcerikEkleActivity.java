@@ -63,6 +63,7 @@ public class MenuIcerikEkleActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 birimEdittext.setText("");
                 urunadi.setText("");
+                birimEdittext.requestFocus();
             }
         });
 

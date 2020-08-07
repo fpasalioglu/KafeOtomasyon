@@ -1,93 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f1f1f1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include
+        android:id="@+id/tool"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:id="@+id/menuAditext"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card1"
+        android:layout_below="@+id/tool"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Menu Adı"
-        android:textColor="#468DFA"
-        android:textAlignment="center"
-        android:textSize="26dp"/>
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ürün Ekle"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:textSize="24dp"
-        android:textColor="#EF327D"/>
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/BirimeditText"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/menuAditext"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="1"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="5dp"
-            android:inputType="number"
-            android:hint="Birim Fiyatı ₺" />
-
-        <EditText
-            android:id="@+id/UrunAdieditText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="1"
-            android:layout_marginRight="10dp"
-            android:inputType="textPersonName"
-            android:hint="Ürün Adı" />
-
-        <Button
-            android:id="@+id/urunekle"
             android:layout_marginRight="5dp"
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Ekle" />
-    </LinearLayout>
+            android:text="Menu Adı"
+            android:textAlignment="center"
+            android:textColor="#468DFA"
+            android:textSize="26dp" />
+    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_marginTop="10dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card2"
+        android:layout_below="@+id/card1"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ürün Listesi"
-        android:textAlignment="center"
-        android:textSize="24dp"
-        android:textColor="#EF327D"/>
+        android:visibility="gone">
 
-    <ListView
-        android:id="@+id/menuurunlistesi"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/emptyText"
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Ürün Ekle"
+                android:textAlignment="center"
+                android:textColor="#EF327D"
+                android:textSize="24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/BirimeditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:ems="1"
+                    android:hint="Birim Fiyatı ₺"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/UrunAdieditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:ems="1"
+                    android:hint="Ürün Adı"
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/urunekle"
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:text="Ekle" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_below="@+id/card2"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="#ef327d"
-        android:textSize="22dp"
-        android:text="Ürün Listesi Boş" />
-</LinearLayout>
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Ürün Listesi"
+            android:textAlignment="center"
+            android:textColor="#EF327D"
+            android:textSize="24dp" />
+
+        <ListView
+            android:id="@+id/menuurunlistesi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:id="@+id/emptyText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#ef327d"
+            android:textSize="22dp"
+            android:text="Ürün Listesi Boş" />
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/done"
+        android:backgroundTint="#FF8A80"
+        android:visibility="gone"
+        app:elevation="4dp"
+        app:borderWidth="0dp"/>
+</RelativeLayout>

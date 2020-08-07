@@ -15,10 +15,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import com.example.kafeotomasyon.adapters.UrunAdapter;
 import com.example.kafeotomasyon.models.MenuModel;
 import com.example.kafeotomasyon.models.Urun;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import static com.example.kafeotomasyon.GirisEkraniActivity.database;
+import static com.example.kafeotomasyon.Utils.Constants.kullanici;
+import static com.example.kafeotomasyon.Utils.Constants.menuisimler;
 
 public class MenuIcerikDuzenleActivity extends AppCompatActivity {
     private TextView menuadi;
@@ -36,9 +40,9 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
     private ListView listView;
     private TextView empty;
     private List<Urun> urunler;
-    private DatabaseReference databaseUrun;
+    private DatabaseReference databaseMenu;
     private UrunAdapter adapter;
-
+    private CardView cardView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +61,33 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.menuurunlistesi);
         ekle = (Button) findViewById(R.id.urunekle);
         empty = (TextView) findViewById(R.id.emptyText);
-        databaseUrun = database.child("menuler");
+        cardView = (CardView) findViewById(R.id.card2);
+
+        databaseMenu = database.child("menuler");
+        FloatingActionButton kapatma =(FloatingActionButton) findViewById(R.id.fab2);
+        if (kullanici.getGorev().equals("yonetici")){
+            cardView.setVisibility(View.VISIBLE);
+            kapatma.setVisibility(View.VISIBLE);
+        }
+
+        kapatma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MenuIcerikDuzenleActivity.this);
+                builder.setTitle("Sil?");
+                builder.setMessage("Menü Silinsin Mi?");
+                builder.setNegativeButton("Hayır", null);
+                builder.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        databaseMenu.child(menuadi.getText().toString()).removeValue();
+                        menuisimler.remove(menuadi.getText().toString());
+                        finish();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         Intent intent=getIntent();
         menuadi.setText(intent.getStringExtra("id"));
@@ -141,7 +171,7 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
     private void FirebaseSave(){
         MenuModel menu = new MenuModel(menuadi.getText().toString(), urunler);
         Map<String, Object> postValues = menu.toMap();
-        databaseUrun.child(menuadi.getText().toString()).updateChildren(postValues);
+        databaseMenu.child(menuadi.getText().toString()).updateChildren(postValues);
         finish();
     }
 }

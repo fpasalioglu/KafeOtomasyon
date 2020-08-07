@@ -15,11 +15,11 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.kafeotomasyon.ui.menuekle.MenuEkleFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_menuekle" />
+        tools:layout="@layout/fragment_menuler" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.kafeotomasyon.ui.slideshow.SlideshowFragment"
+        android:name="com.example.kafeotomasyon.ui.hasilat.HasilatFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
