@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.kafeotomasyon.adapters.SiparisAdapter;
+import com.example.kafeotomasyon.models.AylikHasilat;
+import com.example.kafeotomasyon.models.GunlukHasilat;
 import com.example.kafeotomasyon.models.Masa;
 import com.example.kafeotomasyon.models.Siparis;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,7 +43,7 @@ import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaYonetimiActivity extends AppCompatActivity {
     private SiparisAdapter listadapter;
-    private DatabaseReference databaseMasa, databaseKasa, databaseNakit, databaseKredi, databaseAylik;
+    private DatabaseReference databaseMasa, databaseKasa, databaseAylik;
     private String getmasa;
     private float fiyat = 0;
     private TextView fiyatText;
@@ -62,9 +65,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         databaseMasa = database.child("masalar");
-        databaseKasa = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("toplam");
-        databaseNakit = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("nakit");
-        databaseKredi = database.child("gunlukhasilat").child(kullanici.getIsim()).child(String.valueOf(dayOfMonth)).child("kredi");
+        databaseKasa = database.child("gunlukhasilat").child(String.valueOf(dayOfMonth)).child(kullanici.getIsim());
         databaseAylik = database.child("aylikhasilat").child(String.valueOf(dayOfMonth));
 
         myDialog = new Dialog(this);
@@ -194,50 +195,21 @@ public class MasaYonetimiActivity extends AppCompatActivity {
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String value="";
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    value = ds.getValue().toString();
+                Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
+                for (DataSnapshot snapshot1 : snapshot) {
+                    if (snapshot1.getKey().equals("kredihasilat")){
+                        eskiKredi = Float.parseFloat(String.valueOf(snapshot1.getValue()));
+                    } else if (snapshot1.getKey().equals("nakithasilat")){
+                        eskiNakit = Float.parseFloat(String.valueOf(snapshot1.getValue()));
+                    } else
+                        eski = Float.parseFloat(String.valueOf(snapshot1.getValue()));
                 }
-                if (!value.equals(""))
-                eski = Float.parseFloat(value);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
         databaseKasa.addListenerForSingleValueEvent(eventListener);
-
-        ValueEventListener eventListener2 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value="";
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    value = ds.getValue().toString();
-                }
-                if (!value.equals(""))
-                    eskiNakit = Float.parseFloat(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-        databaseNakit.addListenerForSingleValueEvent(eventListener2);
-
-        ValueEventListener eventListener3 = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value="";
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    value = ds.getValue().toString();
-                }
-                if (!value.equals(""))
-                    eskiKredi = Float.parseFloat(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        };
-        databaseKredi.addListenerForSingleValueEvent(eventListener3);
 
         ValueEventListener eventListener4 = new ValueEventListener() {
             @Override
@@ -259,8 +231,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HashMap<String, Object> result = new HashMap<>();
-                result.put("hasilat", eski + fiyat);
-                databaseKasa.setValue(result);
+                result.put("toplamhasilat", eski + fiyat);
 
                 HashMap<String, Object> result4 = new HashMap<>();
                 result4.put("gun", String.valueOf(dayOfMonth));
@@ -268,14 +239,11 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                 databaseAylik.setValue(result4);
 
                 if (kredi){
-                    HashMap<String, Object> result2 = new HashMap<>();
-                    result2.put("hasilat", eskiKredi + fiyat);
-                    databaseKredi.setValue(result2);
+                    result.put("kredihasilat", eskiKredi + fiyat);
                 }else {
-                    HashMap<String, Object> result3 = new HashMap<>();
-                    result3.put("hasilat", eskiNakit + fiyat);
-                    databaseNakit.setValue(result3);
+                    result.put("nakithasilat", eskiNakit + fiyat);
                 }
+                databaseKasa.updateChildren(result);
 
                 databaseMasa.child(getmasa).removeValue();
                 myDialog.dismiss();

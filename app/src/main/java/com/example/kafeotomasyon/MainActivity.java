@@ -2,12 +2,14 @@ package com.example.kafeotomasyon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.kafeotomasyon.models.AylikHasilat;
+import com.example.kafeotomasyon.models.GunlukHasilat;
 import com.example.kafeotomasyon.models.MenuModel;
 import com.example.kafeotomasyon.models.User;
 import com.github.mikephil.charting.data.BarData;
@@ -31,20 +33,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.example.kafeotomasyon.GirisEkraniActivity.database;
+import static com.example.kafeotomasyon.Utils.Constants.kasiyerarray;
+import static com.example.kafeotomasyon.Utils.Constants.gunlukveriler;
 import static com.example.kafeotomasyon.Utils.Constants.menuicerik;
 import static com.example.kafeotomasyon.Utils.Constants.menuisimler;
 import static com.example.kafeotomasyon.Utils.Constants.kullanici;
 import static com.example.kafeotomasyon.Utils.Constants.d;
+import static com.example.kafeotomasyon.Utils.Constants.d2;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
-    private ArrayList<AylikHasilat> veriler = new ArrayList<>();
-    private DatabaseReference databaseAylik2;
+    private ArrayList<AylikHasilat> aylikveriler = new ArrayList<>();
 
+    private DatabaseReference databaseAylik, databaseGunluk;
+    private int dayOfMonth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        databaseAylik2 = database.child("aylikhasilat");
+        Calendar cal = Calendar.getInstance();
+        dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        databaseAylik = database.child("aylikhasilat");
+        databaseGunluk = database.child("gunlukhasilat").child(String.valueOf(dayOfMonth));
+
         mAuth = FirebaseAuth.getInstance();
         kullaniciverisi();
         menucek();
@@ -107,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
                     if (mAuth.getCurrentUser().getUid().equals(user.getUid())) {
                         kullanici = new User(user.getUid(), user.getIsim(), user.getGorev());
                     }
+                    if (user.getGorev().equals("kasiyer")){
+                        kasiyerarray.add(user);
+                    }
                 }
                 navTextChange();
             }
@@ -118,24 +132,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void generateBarData() {
-        ValueEventListener eventListener4 = new ValueEventListener() {
+        ValueEventListener eventListener7 = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
                 for (DataSnapshot snapshot1 : snapshot) {
                     AylikHasilat aylikHasilat = snapshot1.getValue(AylikHasilat.class);
-                    veriler.add(aylikHasilat);
+                    aylikveriler.add(aylikHasilat);
                 }
 
                 ArrayList<IBarDataSet> sets = new ArrayList<>();
                 ArrayList<BarEntry> entries = new ArrayList<>();
 
-                for(int j = 0; j < veriler.size(); j++) {
-                    entries.add(new BarEntry(Integer.parseInt(veriler.get(j).getGun()), veriler.get(j).getHasilat()));
+                for(int j = 0; j < aylikveriler.size(); j++) {
+                    entries.add(new BarEntry(Integer.parseInt(aylikveriler.get(j).getGun()), aylikveriler.get(j).getHasilat()));
                 }
 
                 BarDataSet ds = new BarDataSet(entries, "Aylık Hasılat");
                 ds.setColors(ColorTemplate.VORDIPLOM_COLORS);
+                ds.setValueTextSize(30f);
                 sets.add(ds);
 
                 d = new BarData(sets);
@@ -144,7 +159,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
-        databaseAylik2.addListenerForSingleValueEvent(eventListener4);
+        databaseAylik.addListenerForSingleValueEvent(eventListener7);
+
+        ValueEventListener eventListener8 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
+                for (DataSnapshot snapshot1 : snapshot) {
+                    GunlukHasilat gunlukHasilat = snapshot1.getValue(GunlukHasilat.class);
+                    gunlukveriler.add(gunlukHasilat);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        databaseGunluk.addListenerForSingleValueEvent(eventListener8);
     }
 
     @Override

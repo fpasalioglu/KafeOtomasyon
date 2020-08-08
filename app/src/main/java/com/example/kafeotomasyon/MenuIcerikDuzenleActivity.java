@@ -97,14 +97,13 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
         ekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (urunler!=null) {
-                    urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
-                }else{
+                if (urunler == null) {
                     urunler = new ArrayList<Urun>();
-                    urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
                 }
+                urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
                 birimEdittext.setText("");
                 urunadi.setText("");
+                birimEdittext.requestFocus();
                 adapter.notifyDataSetChanged();
             }
         });
