@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.child("users").getChildren();
+                kasiyerarray.clear();
                 for (DataSnapshot snapshot1 : snapshot) {
                     User user = snapshot1.getValue(User.class);
                     if (mAuth.getCurrentUser().getUid().equals(user.getUid())) {
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                 BarDataSet ds = new BarDataSet(entries, "Aylık Hasılat");
                 ds.setColors(ColorTemplate.VORDIPLOM_COLORS);
-                ds.setValueTextSize(30f);
+                ds.setValueTextSize(20f);
                 sets.add(ds);
 
                 d = new BarData(sets);
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
+                gunlukveriler.clear();
                 for (DataSnapshot snapshot1 : snapshot) {
                     GunlukHasilat gunlukHasilat = snapshot1.getValue(GunlukHasilat.class);
                     gunlukveriler.add(gunlukHasilat);

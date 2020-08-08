@@ -63,6 +63,7 @@
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/chart2"
+                        android:layout_marginBottom="18dp"
                         android:layout_width="match_parent"
                         android:layout_height="300dp" />
                 </LinearLayout>
