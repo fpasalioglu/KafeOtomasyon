@@ -1,9 +1,7 @@
 package com.example.kafeotomasyon;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,11 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.kafeotomasyon.adapters.SiparisAdapter;
 import com.example.kafeotomasyon.models.Masa;
-import com.example.kafeotomasyon.models.Siparis;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
 
-import java.util.ArrayList;
 import java.util.Map;
 import static com.example.kafeotomasyon.GirisEkraniActivity.database;
 import static com.example.kafeotomasyon.Utils.Constants.masa_list;
@@ -32,7 +28,7 @@ import static com.example.kafeotomasyon.Utils.Constants.siparisarray;
 
 public class MasaEkleActivity extends AppCompatActivity {
     SiparisAdapter siparisadapter;
-    String masaadi;
+    String masaadi ="";
     private DatabaseReference databaseMasa;
 
     @Override
@@ -95,7 +91,11 @@ public class MasaEkleActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_save) {
-            FirebaseSave(); //todo masaisim zorunlulugu
+            if (!masaadi.equals(""))
+                FirebaseSave();
+            else {
+                Toast.makeText(this,"Masa Numarası Seçmelisiniz!",Toast.LENGTH_LONG).show();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

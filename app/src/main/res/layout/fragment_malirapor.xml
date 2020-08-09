@@ -33,6 +33,15 @@
                         android:textAlignment="center"
                         android:textSize="20dp" />
 
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tutar"
+                        android:textSize="16dp"
+                        android:textColor="@color/bluelight"
+                        android:textAlignment="center"/>
+
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
@@ -45,6 +54,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
+                android:layout_marginBottom="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" >
 
@@ -61,11 +71,20 @@
                         android:textAlignment="center"
                         android:textSize="20dp" />
 
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tutar"
+                        android:textSize="16dp"
+                        android:textColor="@color/bluelight"
+                        android:textAlignment="center"/>
+
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/chart2"
-                        android:layout_marginBottom="18dp"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp" />
+                        android:layout_height="300dp"
+                        android:layout_marginBottom="5dp"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

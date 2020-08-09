@@ -2,7 +2,6 @@ package com.example.kafeotomasyon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,13 +35,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.example.kafeotomasyon.GirisEkraniActivity.database;
-import static com.example.kafeotomasyon.Utils.Constants.kasiyerarray;
+import static com.example.kafeotomasyon.Utils.Constants.aylikhasilattoplam;
 import static com.example.kafeotomasyon.Utils.Constants.gunlukveriler;
 import static com.example.kafeotomasyon.Utils.Constants.menuicerik;
 import static com.example.kafeotomasyon.Utils.Constants.menuisimler;
 import static com.example.kafeotomasyon.Utils.Constants.kullanici;
 import static com.example.kafeotomasyon.Utils.Constants.d;
-import static com.example.kafeotomasyon.Utils.Constants.d2;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<AylikHasilat> aylikveriler = new ArrayList<>();
 
     private DatabaseReference databaseAylik, databaseGunluk;
-    private int dayOfMonth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Calendar cal = Calendar.getInstance();
-        dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
         databaseAylik = database.child("aylikhasilat");
         databaseGunluk = database.child("gunlukhasilat").child(String.valueOf(dayOfMonth));
 
@@ -113,14 +111,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.child("users").getChildren();
-                kasiyerarray.clear();
                 for (DataSnapshot snapshot1 : snapshot) {
                     User user = snapshot1.getValue(User.class);
                     if (mAuth.getCurrentUser().getUid().equals(user.getUid())) {
                         kullanici = new User(user.getUid(), user.getIsim(), user.getGorev());
-                    }
-                    if (user.getGorev().equals("kasiyer")){
-                        kasiyerarray.add(user);
                     }
                 }
                 navTextChange();
@@ -137,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
+                aylikveriler.clear();
+                aylikhasilattoplam=0;
                 for (DataSnapshot snapshot1 : snapshot) {
                     AylikHasilat aylikHasilat = snapshot1.getValue(AylikHasilat.class);
                     aylikveriler.add(aylikHasilat);
@@ -147,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 for(int j = 0; j < aylikveriler.size(); j++) {
                     entries.add(new BarEntry(Integer.parseInt(aylikveriler.get(j).getGun()), aylikveriler.get(j).getHasilat()));
+                    aylikhasilattoplam+=aylikveriler.get(j).getHasilat();
                 }
 
                 BarDataSet ds = new BarDataSet(entries, "Aylık Hasılat");
@@ -160,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
-        databaseAylik.addListenerForSingleValueEvent(eventListener7);
+        databaseAylik.addValueEventListener(eventListener7);
 
         ValueEventListener eventListener8 = new ValueEventListener() {
             @Override
@@ -176,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
-        databaseGunluk.addListenerForSingleValueEvent(eventListener8);
+        databaseGunluk.addValueEventListener(eventListener8);
     }
 
     @Override

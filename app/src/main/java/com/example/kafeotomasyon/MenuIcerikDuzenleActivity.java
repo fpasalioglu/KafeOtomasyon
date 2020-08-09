@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,11 +101,15 @@ public class MenuIcerikDuzenleActivity extends AppCompatActivity {
                 if (urunler == null) {
                     urunler = new ArrayList<Urun>();
                 }
-                urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
-                birimEdittext.setText("");
-                urunadi.setText("");
-                birimEdittext.requestFocus();
-                adapter.notifyDataSetChanged();
+                if (urunadi.getText().toString().isEmpty() || birimEdittext.getText().toString().isEmpty()){
+                    Toast.makeText(MenuIcerikDuzenleActivity.this,"Gerekli bölümleri doldurunuz",Toast.LENGTH_LONG).show();
+                }else {
+                    urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()), 0));
+                    birimEdittext.setText("");
+                    urunadi.setText("");
+                    birimEdittext.requestFocus();
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 

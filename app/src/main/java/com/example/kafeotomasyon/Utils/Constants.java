@@ -18,11 +18,10 @@ public class Constants {
     public static List<String> masa_list;
 
     public static ArrayList<Siparis> siparisarray = new ArrayList<Siparis>();
-    public static ArrayList<User> kasiyerarray = new ArrayList<User>();
     public static ArrayList<GunlukHasilat> gunlukveriler = new ArrayList<GunlukHasilat>();
 
     public static final int REQUEST_CODE = 1;
     public static User kullanici;
     public static BarData d;
-    public static BarData d2;
+    public static float aylikhasilattoplam;
 }

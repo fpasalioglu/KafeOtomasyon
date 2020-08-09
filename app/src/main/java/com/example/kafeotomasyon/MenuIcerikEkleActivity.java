@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,11 +60,15 @@ public class MenuIcerikEkleActivity extends AppCompatActivity {
         ekle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()),0));
-                adapter.notifyDataSetChanged();
-                birimEdittext.setText("");
-                urunadi.setText("");
-                birimEdittext.requestFocus();
+                if (urunadi.getText().toString().isEmpty() || birimEdittext.getText().toString().isEmpty()){
+                    Toast.makeText(MenuIcerikEkleActivity.this,"Gerekli bölümleri doldurunuz",Toast.LENGTH_LONG).show();
+                }else {
+                    urunler.add(new Urun(urunadi.getText().toString(), Float.parseFloat(birimEdittext.getText().toString()), 0));
+                    adapter.notifyDataSetChanged();
+                    birimEdittext.setText("");
+                    urunadi.setText("");
+                    birimEdittext.requestFocus();
+                }
             }
         });
 

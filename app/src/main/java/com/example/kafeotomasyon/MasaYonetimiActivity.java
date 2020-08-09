@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.kafeotomasyon.adapters.SiparisAdapter;
-import com.example.kafeotomasyon.models.AylikHasilat;
-import com.example.kafeotomasyon.models.GunlukHasilat;
 import com.example.kafeotomasyon.models.Masa;
 import com.example.kafeotomasyon.models.Siparis;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,6 +47,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
     private Dialog myDialog;
     private float eski, eskiNakit, eskiKredi, eskiAylik;
     int dayOfMonth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,8 +199,9 @@ public class MasaYonetimiActivity extends AppCompatActivity {
                         eskiKredi = Float.parseFloat(String.valueOf(snapshot1.getValue()));
                     } else if (snapshot1.getKey().equals("nakithasilat")){
                         eskiNakit = Float.parseFloat(String.valueOf(snapshot1.getValue()));
-                    } else
+                    } else if (snapshot1.getKey().equals("toplamhasilat")) {
                         eski = Float.parseFloat(String.valueOf(snapshot1.getValue()));
+                    }
                 }
             }
 
@@ -232,6 +231,7 @@ public class MasaYonetimiActivity extends AppCompatActivity {
             public void onClick(View v) {
                 HashMap<String, Object> result = new HashMap<>();
                 result.put("toplamhasilat", eski + fiyat);
+                result.put("kasiyeradi", kullanici.getIsim());
 
                 HashMap<String, Object> result4 = new HashMap<>();
                 result4.put("gun", String.valueOf(dayOfMonth));

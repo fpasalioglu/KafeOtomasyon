@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,25 +20,29 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
+import static com.example.kafeotomasyon.Utils.Constants.aylikhasilattoplam;
 import static com.example.kafeotomasyon.Utils.Constants.d;
 import static com.example.kafeotomasyon.Utils.Constants.gunlukveriler;
-import static com.example.kafeotomasyon.Utils.Constants.kasiyerarray;
 
 public class HasilatFragment extends Fragment {
 
     float barWidth;
     float barSpace;
     float groupSpace;
+    float gunluktutar=0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_malirapor, container, false);
+        TextView gunluktutarText = (TextView) root.findViewById(R.id.textView11);
+        TextView ayliktutarText = (TextView) root.findViewById(R.id.textView12);
 
         BarChart chart = root.findViewById(R.id.chart);
-
+        chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
         chart.setDrawBarShadow(false);
@@ -62,25 +67,27 @@ public class HasilatFragment extends Fragment {
         chart2.setDrawBarShadow(false);
         chart2.setScaleEnabled(false);
         chart2.animateY(1000);
+        ayliktutarText.setText(aylikhasilattoplam+"₺");
 
-        int groupCount = kasiyerarray.size();
+        int groupCount = gunlukveriler.size();
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> yVals2 = new ArrayList<BarEntry>();
 
         ArrayList<String> xVals = new ArrayList<String>();
-            for (int i = 0; i < gunlukveriler.size(); i++) {
-                xVals.add(kasiyerarray.get(i).getIsim());
-                yVals1.add(new BarEntry(i + 1, (float) gunlukveriler.get(i).getNakithasilat()));
-                yVals2.add(new BarEntry(i + 1, (float) gunlukveriler.get(i).getKredihasilat()));
-            }
-
+        for (int i = 0; i < gunlukveriler.size(); i++) {
+            gunluktutar += gunlukveriler.get(i).getToplamhasilat();
+            xVals.add(gunlukveriler.get(i).getKasiyeradi());
+            yVals1.add(new BarEntry(i + 1, (float) gunlukveriler.get(i).getNakithasilat()));
+            yVals2.add(new BarEntry(i + 1, (float) gunlukveriler.get(i).getKredihasilat()));
+        }
+        gunluktutarText.setText(gunluktutar +"₺");
 
         BarDataSet set1, set2;
         set1 = new BarDataSet(yVals1, "Nakit");
-        set1.setColor(Color.RED);
+        set1.setColor(Color.rgb(140, 234, 255));
         set1.setValueTextSize(16f);
         set2 = new BarDataSet(yVals2, "Kredi");
-        set2.setColor(Color.BLUE);
+        set2.setColor(Color.rgb(255, 140, 157));
         set2.setValueTextSize(16f);
         BarData data = new BarData(set1, set2);
         data.setValueFormatter(new LargeValueFormatter());
@@ -95,16 +102,7 @@ public class HasilatFragment extends Fragment {
             chart2.invalidate();
         }
         chart2.setNoDataText("Veri Bulunamadı");
-
-        Legend l = chart2.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(true);
-        l.setYOffset(20f);
-        l.setXOffset(0f);
-        l.setYEntrySpace(0f);
-        l.setTextSize(14f);
+        chart2.getLegend().setTextSize(12f);
 
         XAxis xAxis2 = chart2.getXAxis();
         xAxis2.setGranularity(1f);

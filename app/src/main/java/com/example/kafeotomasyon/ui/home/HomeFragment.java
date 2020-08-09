@@ -2,8 +2,10 @@ package com.example.kafeotomasyon.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,9 +16,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.kafeotomasyon.BirlestirActivity;
 import com.example.kafeotomasyon.MasaEkleActivity;
 import com.example.kafeotomasyon.MasaYonetimiActivity;
 import com.example.kafeotomasyon.R;
+import com.example.kafeotomasyon.SettingsActivity;
 import com.example.kafeotomasyon.adapters.MasaAdapter;
 import com.example.kafeotomasyon.models.Masa;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,12 +40,12 @@ public class HomeFragment extends Fragment {
 
     public static MasaAdapter masaadapter;
     TextView emptytext;
-    private FloatingActionButton fab;
     private ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        setHasOptionsMenu(true);
 
         masa_list = new ArrayList<String>();
         kullanilabirMasalar = new ArrayList<String>();
@@ -53,7 +57,7 @@ public class HomeFragment extends Fragment {
 
         gridView = (GridView) root.findViewById(R.id.gridView1);
         emptytext = (TextView) root.findViewById(R.id.emptyText);
-        fab = (FloatingActionButton) root.findViewById(R.id.fab1);
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab1);
         progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
 
         gridView.setEmptyView( emptytext );
@@ -96,5 +100,25 @@ public class HomeFragment extends Fragment {
         database.addValueEventListener(postListener);
 
         return root;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.homefragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+            Intent i = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(i);
+            return true;
+        } else if (item.getItemId() == R.id.action_birlestir){
+            Intent i = new Intent(getActivity(), BirlestirActivity.class);
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

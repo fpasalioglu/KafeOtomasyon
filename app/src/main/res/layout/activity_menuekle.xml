@@ -57,6 +57,7 @@
 
         <Button
             android:id="@+id/urunekle"
+            android:background="@drawable/button_mavi"
             android:layout_marginRight="5dp"
             android:layout_width="10dp"
             android:layout_height="wrap_content"

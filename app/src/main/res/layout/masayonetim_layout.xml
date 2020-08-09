@@ -117,7 +117,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:clickable="true"
-        app:srcCompat="@drawable/done"
+        app:srcCompat="@drawable/cancel"
         android:backgroundTint="#FF8A80"
         android:visibility="gone"
         app:elevation="4dp"
