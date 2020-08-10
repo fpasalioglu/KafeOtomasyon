@@ -80,6 +80,7 @@ public class HasilatFragment extends Fragment {
             yVals1.add(new BarEntry(i + 1, (float) gunlukveriler.get(i).getNakithasilat()));
             yVals2.add(new BarEntry(i + 1, (float) gunlukveriler.get(i).getKredihasilat()));
         }
+
         gunluktutarText.setText(gunluktutar +"₺");
 
         BarDataSet set1, set2;
