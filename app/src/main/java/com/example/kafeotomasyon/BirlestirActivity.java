@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -87,46 +88,52 @@ public class BirlestirActivity extends AppCompatActivity {
         birlestir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ValueEventListener postListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
-                        for (DataSnapshot snapshot1 : snapshot) {
-                            Masa masa = snapshot1.getValue(Masa.class);
-                            if(masa.getMasaadi().equals(tasinacakMasa)) {
-                                tasinacaksiparis = masa.getsiparisarray();
-                                if (tasinacaksiparis == null) {
-                                    tasinacaksiparis = new ArrayList<Siparis>();
+                if (!hedefMasa.equals("") && !tasinacakMasa.equals("") && !tasinacakMasa.equals(hedefMasa)) {
+                    ValueEventListener postListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Iterable<DataSnapshot> snapshot = dataSnapshot.getChildren();
+                            for (DataSnapshot snapshot1 : snapshot) {
+                                Masa masa = snapshot1.getValue(Masa.class);
+                                if (masa.getMasaadi().equals(tasinacakMasa)) {
+                                    tasinacaksiparis = masa.getsiparisarray();
+                                    if (tasinacaksiparis == null) {
+                                        tasinacaksiparis = new ArrayList<Siparis>();
+                                    }
+                                    for (int i = 0; i < tasinacaksiparis.size(); i++) {
+                                        tasinacakfiyat += tasinacaksiparis.get(i).getFiyat();
+                                    }
                                 }
-                                for (int i = 0; i<tasinacaksiparis.size(); i++){
-                                    tasinacakfiyat += tasinacaksiparis.get(i).getFiyat();
+                                if (masa.getMasaadi().equals(hedefMasa)) {
+                                    hedefsiparis = masa.getsiparisarray();
+                                    if (hedefsiparis == null) {
+                                        hedefsiparis = new ArrayList<Siparis>();
+                                    }
+                                    for (int i = 0; i < hedefsiparis.size(); i++) {
+                                        hedeffiyat += hedefsiparis.get(i).getFiyat();
+                                    }
                                 }
                             }
-                            if(masa.getMasaadi().equals(hedefMasa)) {
-                                hedefsiparis = masa.getsiparisarray();
-                                if (hedefsiparis == null) {
-                                    hedefsiparis = new ArrayList<Siparis>();
-                                }
-                                for (int i = 0; i<hedefsiparis.size(); i++){
-                                    hedeffiyat += hedefsiparis.get(i).getFiyat();
-                                }
-                            }
+
+                            hedefsiparis.addAll(tasinacaksiparis);
+
+                            Masa masa = new Masa(hedefMasa, hedefsiparis);
+                            Map<String, Object> postValues = masa.toMap();
+                            databaseMasa.child(hedefMasa).setValue(postValues);
+                            databaseMasa.child(tasinacakMasa).removeValue();
+                            masa_list.remove(tasinacakMasa);
+                            finish();
                         }
 
-                        hedefsiparis.addAll(tasinacaksiparis);
-
-                        Masa masa = new Masa(hedefMasa, hedefsiparis);
-                        Map<String, Object> postValues = masa.toMap();
-                        databaseMasa.child(hedefMasa).setValue(postValues);
-                        databaseMasa.child(tasinacakMasa).removeValue();
-                        masa_list.remove(tasinacakMasa);
-                        finish();
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                };
-                databaseMasa.addListenerForSingleValueEvent(postListener);
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    };
+                    databaseMasa.addListenerForSingleValueEvent(postListener);
+                }else if(tasinacakMasa.equals(hedefMasa))
+                    Toast.makeText(BirlestirActivity.this,"Aynı masayı seçtiniz",Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(BirlestirActivity.this,"Gerekli yerleri doldurunuz",Toast.LENGTH_LONG).show();
             }
         });
 

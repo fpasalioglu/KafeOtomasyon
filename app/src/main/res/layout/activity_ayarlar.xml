@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f1f1f1"
     android:orientation="vertical">
 
     <ScrollView
@@ -16,81 +17,121 @@
             <include android:id="@+id/tool"
                 layout="@layout/toolbar" />
 
-            <TextView
-                android:id="@+id/textView1"
+            <androidx.cardview.widget.CardView
                 android:layout_below="@+id/tool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Kullanıcı İşlemleri"
-                android:textSize="21dp"
-                android:textAlignment="center"
-                android:textColor="#2196F3"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"/>
-
-            <EditText
-                android:id="@+id/registerName"
-                android:padding="15dp"
-                android:layout_below="@+id/textView1"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:hint="İsim" />
-
-            <EditText
-                android:id="@+id/registerUserName"
-                android:padding="15dp"
-                android:layout_below="@+id/registerName"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:hint="Eposta" />
-
-            <EditText
-                android:inputType="textPassword"
-                android:padding="15dp"
-                android:layout_below="@+id/registerUserName"
-                android:id="@+id/registerPassword"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:hint="Şifre" />
-
-            <RadioGroup
-                android:id="@+id/radio"
-                android:padding="15dp"
-                android:layout_below="@+id/registerPassword"
+                android:id="@+id/layout1"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <RadioButton
-                    android:id="@+id/radioButton"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Garson" />
+                    android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/radioButton2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Kasiyer" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="Kullanıcı Bilgileri"
+                        android:textAlignment="center"
+                        android:textColor="#2196F3"
+                        android:textSize="21dp" />
 
-                <RadioButton
-                    android:id="@+id/radioButton3"
+                    <EditText
+                        android:id="@+id/registerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView1"
+                        android:layout_marginTop="10dp"
+                        android:hint="İsim"
+                        android:padding="15dp" />
+
+                    <EditText
+                        android:id="@+id/registerUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/registerName"
+                        android:layout_marginTop="10dp"
+                        android:hint="Eposta"
+                        android:padding="15dp" />
+
+                    <EditText
+                        android:id="@+id/registerPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/registerUserName"
+                        android:layout_marginBottom="20dp"
+                        android:hint="Şifre"
+                        android:inputType="textPassword"
+                        android:padding="15dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layout2"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_below="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Yönetici" />
-            </RadioGroup>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="Görev"
+                        android:textAlignment="center"
+                        android:textColor="#2196F3"
+                        android:textSize="21dp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout1"
+                        android:padding="15dp">
+
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Garson" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Kasiyer" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Yönetici" />
+                    </RadioGroup>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <Button
                 android:id="@+id/buttonKaydet"
-                android:layout_below="@+id/radio"
+                android:layout_below="@+id/layout2"
                 android:background="@color/colorAccent"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:textColor="#ffffff"
