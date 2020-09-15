@@ -38,7 +38,7 @@ import static com.example.kafeotomasyon.Utils.Constants.kullanilabirMasalar;
 public class HomeFragment extends Fragment {
     GridView gridView;
 
-    public static MasaAdapter masaadapter;
+    private MasaAdapter masaadapter;
     TextView emptytext;
     private ProgressBar progressBar;
 
